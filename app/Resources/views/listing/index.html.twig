@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>List</h1>
+
+    <table>
+        <tr>
+            <th>N° Reservation (id)</th>
+            <td>{{ reservation.id }}</td>
+        </tr>
+        <tr>
+            <th>N° flight(id)</th>
+            <td>{{ flight.id }}</td>
+        </tr>
+        <tr>
+            <th>Reservation's Seat</th>
+            <td>{{ reservation.nbReservedSeats }}</td>
+        </tr>
+        <tr>
+            <th>Flight's Departure</th>
+            <td>{{ flight.departure }}</td>
+        </tr>
+        <tr>
+            <th>Flight's Arrival</th>
+            <td>{{ flight.arrival }}</td>
+        </tr>
+        {% if flight.pilot.role == "Pilot" %}
+        <tr>
+            <th>Pilot</th>
+            <td>{{ flight.pilot }}</td>
+        </tr>
+        {% endif %}
+        <tr>
+            <th>Plane Model</th>
+            <td>{{ planemodel.model }}</td>
+        </tr>
+        <tr>
+            <th>Cruise Speed</th>
+            <td>{{ planemodel.cruiseSpeed }}</td>
+        </tr>
+        <tr>
+            <th>Flight's Description</th>
+            <td>{{ flight.description }}</td>
+        </tr>
+
+    </table>
+
+    <ul>
+        <li>
+            <a href="/">Return to Homepage</a>
+        </li>
+    </ul>
+
+{% endblock %}
