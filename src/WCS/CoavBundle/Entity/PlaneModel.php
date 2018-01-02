@@ -3,6 +3,7 @@
 namespace WCS\CoavBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * PlaneModel
@@ -23,8 +24,11 @@ class PlaneModel
 
     /**
      * @var string
-     *
      * @ORM\Column(name="model", type="string", length=128)
+     * @Assert\NotNull(
+     *     message = "You must enter the plane model"
+     * )
+     *
      */
     private $model;
 
@@ -39,13 +43,20 @@ class PlaneModel
      * @var int
      *
      * @ORM\Column(name="cruiseSpeed", type="smallint", nullable=true)
+     * @Assert\Range(
+     *     min=50,
+     *     minMessage="The plane must have at least {{ limit }}mph speed."
+     * )
      */
     private $cruiseSpeed;
 
     /**
      * @var int
-     *
      * @ORM\Column(name="planeNbSeats", type="smallint")
+     * @Assert\Range(
+     *     min=1,
+     *     minMessage="The plane must have at least {{ limit }} seat."
+     * )
      */
     private $planeNbSeats;
 
@@ -57,10 +68,9 @@ class PlaneModel
     private $isAvailable;
 
     /**
-     * @@ORM\OneToMany(targetEntity="WCS\CoavBundle\Entity\Flight", mappedBy="plane")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToMany(targetEntity="WCS\CoavBundle\Entity\Flight", mappedBy="planeModel")
      */
-    private $planes;
+    private $flights;
 
 
     /**
@@ -193,19 +203,49 @@ class PlaneModel
         return $this->isAvailable;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getPlanes()
+    public function __toString()
     {
-        return $this->planes;
+        return $this->model . " " . $this->manufacturer;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->flights = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
-     * @param mixed $planes
+     * Add flight
+     *
+     * @param \WCS\CoavBundle\Entity\Flight $flight
+     *
+     * @return PlaneModel
      */
-    public function setPlanes($planes)
+    public function addFlight(\WCS\CoavBundle\Entity\Flight $flight)
     {
-        $this->planes = $planes;
+        $this->flights[] = $flight;
+
+        return $this;
+    }
+
+    /**
+     * Remove flight
+     *
+     * @param \WCS\CoavBundle\Entity\Flight $flight
+     */
+    public function removeFlight(\WCS\CoavBundle\Entity\Flight $flight)
+    {
+        $this->flights->removeElement($flight);
+    }
+
+    /**
+     * Get flights
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFlights()
+    {
+        return $this->flights;
     }
 }

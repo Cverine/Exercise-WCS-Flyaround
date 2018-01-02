@@ -10,4 +10,13 @@ namespace WCS\CoavBundle\Repository;
  */
 class PlaneModelRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findLastModels()
+    {
+        $qb = $this
+            ->createQueryBuilder('p')
+            ->orderBy('p.manufacturer', 'ASC')
+            ->setMaxResults(3)
+            ->getQuery();
+        return $qb->getResult();
+    }
 }

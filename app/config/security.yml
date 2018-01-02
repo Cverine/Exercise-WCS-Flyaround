@@ -1,9 +1,23 @@
 # To get started with security, check out the documentation:
 # https://symfony.com/doc/current/security.html
 security:
+    encoders:
+        WCS\CoavBundle\Entity\User:
+            algorithm: bcrypt
+            cost: 10
+
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_TRAVELER, ROLE_PILOT]
+        ROLE_PILOT: ROLE_TRAVELER
+
+    #access_control:
 
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
+        db_provider:
+            entity:
+                class: WCS\CoavBundle\Entity\User
+                property: userName
         in_memory:
             memory: ~
 
@@ -15,7 +29,23 @@ security:
 
         main:
             anonymous: ~
+            pattern:    ^/
+            http_basic: ~
+            provider: db_provider
+            form_login:
+                login_path: login
+                check_path: login_check
+            logout:
+                path: /logout
+                target: /
+            remember_me:
+                secret:   '%secret%'
+                lifetime: 15768000 # 6 mois
+                path:     /
             # activate different ways to authenticate
+
+
+        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
 
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
             #http_basic: ~

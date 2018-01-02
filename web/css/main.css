@@ -1,0 +1,66 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+.flightBody
+{
+    margin-left: 20px;
+    margin-top: 30px;
+}
+
+.flightBody h3, .editFlightBody h3
+{
+    font-size: 2em;
+}
+
+.flightBody th
+{
+    margin-left: 10px;
+    font-size: 1.8em;
+    line-height: 2.5em;
+    width: 200px;
+}
+
+.flightBody td
+{
+    font-size: 1.5em;
+    width: 200px;
+}
+
+.flightBody p
+{
+    font-size: 1.3em;
+}
+
+.flightBody .form-group
+{
+    width: 80%;
+}
+
+
+.editCircle
+{
+    border: 1px solid black;
+    font-size: 2em;
+    background-color: #fe5757;
+    color: white;
+    width: 100px;
+    border-radius: 30px;
+}
+
+#mapid
+{
+    width: 500px;
+    height: 500px;
+}
+
+

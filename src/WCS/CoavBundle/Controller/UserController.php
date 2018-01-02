@@ -2,10 +2,13 @@
 
 namespace WCS\CoavBundle\Controller;
 
+use Swift_Mailer;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use WCS\CoavBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * User controller.
@@ -37,19 +40,47 @@ class UserController extends Controller
      * @Route("/new", name="user_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, UserPasswordEncoderInterface $passwordEncoder, Swift_Mailer $mailer)
     {
         $user = new User();
         $form = $this->createForm('WCS\CoavBundle\Form\UserType', $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $password = $passwordEncoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($password);
+            $user->setCreationDate(new \DateTime('now'));
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
 
+            $message = (new \Swift_Message("Welcome to FlyAround"))
+                ->setFrom('severinelab@gmail.com')
+                ->setTo($user->getEmail())
+                ->setCharset('utf-8')
+                ->setBody(
+                    $this->renderView('email/registration.html.twig',
+                    array('userName' => $user->getUserName())),
+                    'text/html'
+                )
+                ->addPart(
+                    $this->renderView('email/registration.html.twig',
+                    array('userName' => $user->getUserName())),
+                    'text/plain'
+                );
+            $mailer->send($message);
+
+            $this->addFlash(
+                'notice',
+                'Un email de confirmation de votre inscription vous a été envoyé'
+            );
+
             return $this->redirectToRoute('user_show', array('id' => $user->getId()));
         }
+
+
 
         return $this->render('user/new.html.twig', array(
             'user' => $user,

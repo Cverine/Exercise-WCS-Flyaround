@@ -5,7 +5,9 @@ namespace WCS\CoavBundle\Controller;
 use WCS\CoavBundle\Entity\Flight;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * Flight controller.
@@ -26,9 +28,21 @@ class FlightController extends Controller
 
         $flights = $em->getRepository('WCSCoavBundle:Flight')->findAll();
 
+        /**envoi email test
+        $message = \Swift_Message::newInstance()
+            -> setSubject('test email')
+            ->setFrom('severinelab@gmail.com')
+            ->setTo('severinelab@gmail.com')
+            ->setCharset('utf-8')
+            ->setContentType('text/html')
+            ->setBody('Coucou ceci est un test');
+        $this->get('mailer')->send($message); */
+
         return $this->render('flight/index.html.twig', array(
             'flights' => $flights,
         ));
+
+
     }
 
     /**
@@ -36,6 +50,7 @@ class FlightController extends Controller
      *
      * @Route("/new", name="flight_new")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_PILOT')")
      */
     public function newAction(Request $request)
     {
@@ -78,6 +93,7 @@ class FlightController extends Controller
      *
      * @Route("/{id}/edit", name="flight_edit")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_PILOT')")
      */
     public function editAction(Request $request, Flight $flight)
     {
@@ -103,6 +119,7 @@ class FlightController extends Controller
      *
      * @Route("/{id}", name="flight_delete")
      * @Method("DELETE")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function deleteAction(Request $request, Flight $flight)
     {

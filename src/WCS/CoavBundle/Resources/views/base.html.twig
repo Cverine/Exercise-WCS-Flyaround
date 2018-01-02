@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}{% endblock %}FlyAround</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+    {% include 'WCSCoavBundle:partials:head.html.twig' %}
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+<header>
+    {% include 'WCSCoavBundle:partials:header.html.twig' %}
+</header>
+
+
+<section>
+
+
+            {% block body %}
+            {% endblock %}
+
+
+</section>
+<footer class="page-footer">
+    {% include 'WCSCoavBundle:partials:footer.html.twig' %}
+</footer>
+{% include 'WCSCoavBundle:partials:scripts.html.twig' %}
+{% block javascripts %}{% endblock %}
+<script>initmap();</script>
+
+<!-- SCRIPTS MODALE -->
+
+<!-- Le script qui crée la popup -->
+<script src="{{ asset('js/popupConnect/popup.js') }}"></script>
+<!-- Pour l'effet blur -->
+<!-- by @derSchepp https://github.com/Schepp/CSS-Filters-Polyfill -->
+<script>
+    // this is important for IEs
+    var polyfilter_scriptpath = '/js/';
+</script>
+<script src="{{ asset('js/popupConnect/cssParser.js') }}"></script>
+<script src="{{ asset('js/popupConnect/css-filters-polyfill.js') }}"></script>
+<!-- FIN MODALE -->
+
+
+</body>
+
+
+</html>

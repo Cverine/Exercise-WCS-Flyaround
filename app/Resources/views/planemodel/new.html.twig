@@ -1,16 +1,46 @@
-{% extends 'base.html.twig' %}
+{% extends '@WCSCoav/base.html.twig' %}
 
 {% block body %}
-    <h1>Planemodel creation</h1>
+    <h2>Create a new Planemodel</h2>
+    <div class="row>">
+        <div class="col-md-6 col-md-offset-3 editFlightBody">
+            {{ form_start(form) }}
+            <div class="form-group col-md-8 col-md-offset-1">
+                <h3>{{ form_label(form.model) }}</h3>
+                {{ form_errors(form.model) }}
+                {{ form_widget(form.model) }}
+            </div>
+            <div class="form-group col-md-8 col-md-offset-1">
+                <h3>{{ form_label(form.manufacturer) }}</h3>
+                {{ form_errors(form.manufacturer) }}
+                {{ form_widget(form.manufacturer) }}
+            </div>
+            <div class="form-group col-md-8 col-md-offset-1">
+                <h3>{{ form_label(form.cruiseSpeed) }}</h3>
+                {{ form_errors(form.cruiseSpeed) }}
+                {{ form_widget(form.cruiseSpeed) }}
+            </div>
+            <div class="form-group col-md-8 col-md-offset-1">
+                <h3>{{ form_label(form.planeNbSeats) }}</h3>
+                {{ form_errors(form.planeNbSeats) }}
+                {{ form_widget(form.planeNbSeats) }}
+            </div>
+            <div class="form-group col-md-5 col-md-offset-1">
+                <h3>{{ form_label(form.isAvailable) }}</h3>
+                {{ form_errors(form.isAvailable) }}
+                {{ form_widget(form.isAvailable) }}
+            </div>
+        </div>
+        <div class="flightFooter col-md-6 col-md-offset-3">
+            <div class="col-md-4">
+                <a href="{{ path('planemodel_index') }}">Back to the list</a>
+            </div>
+            <div class="col-md-4">
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
+                <input type="submit" value="Create"/>
 
-    <ul>
-        <li>
-            <a href="{{ path('planemodel_index') }}">Back to the list</a>
-        </li>
-    </ul>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}

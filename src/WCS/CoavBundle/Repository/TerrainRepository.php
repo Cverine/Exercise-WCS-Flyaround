@@ -10,4 +10,13 @@ namespace WCS\CoavBundle\Repository;
  */
 class TerrainRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findLastTerrains()
+    {
+        $qb = $this
+            ->createQueryBuilder('t')
+            ->orderBy('t.city', 'ASC')
+            ->setMaxResults(3)
+            ->getQuery();
+        return $qb->getResult();
+    }
 }

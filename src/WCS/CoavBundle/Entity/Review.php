@@ -3,6 +3,7 @@
 namespace WCS\CoavBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Review
@@ -23,22 +24,21 @@ class Review
 
     /**
      * @var string
-     *
      * @ORM\Column(name="text", type="text")
+     * @Assert\Length(
+     *     min = 2,
+     *     max= 200,
+     *     minMessage="Your message must be at least {{ limit }} characters long.",
+     *     maxMessage="Your message cannot be longer than {{ limit }} characters."
+     * )
      */
     private $text;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="WCS\CoavBundle\Entity\User", inversedBy="usersRated")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $userRated;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WCS\CoavBundle\Entity\User", inversedBy="reviewsAuthor")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="WCS\CoavBundle\Entity\User", inversedBy="reviews")
      */
-    private $reviewAuthor;
+    private $user;
 
     /**
      * @var \DateTime
@@ -89,53 +89,6 @@ class Review
         return $this->text;
     }
 
-    /**
-     * Set userRated
-     *
-     * @param integer $userRated
-     *
-     * @return Review
-     */
-    public function setUserRated($userRated)
-    {
-        $this->userRated = $userRated;
-
-        return $this;
-    }
-
-    /**
-     * Get userRated
-     *
-     * @return int
-     */
-    public function getUserRated()
-    {
-        return $this->userRated;
-    }
-
-    /**
-     * Set reviewAuthor
-     *
-     * @param integer $reviewAuthor
-     *
-     * @return Review
-     */
-    public function setReviewAuthor($reviewAuthor)
-    {
-        $this->reviewAuthor = $reviewAuthor;
-
-        return $this;
-    }
-
-    /**
-     * Get reviewAuthor
-     *
-     * @return int
-     */
-    public function getReviewAuthor()
-    {
-        return $this->reviewAuthor;
-    }
 
     /**
      * Set publicationDate
@@ -183,5 +136,36 @@ class Review
     public function getNote()
     {
         return $this->note;
+    }
+
+
+
+    /**
+     * Set user
+     *
+     * @param \WCS\CoavBundle\Entity\User $user
+     *
+     * @return Review
+     */
+    public function setUser(\WCS\CoavBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \WCS\CoavBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    public function __toString()
+    {
+        return $this->text;
     }
 }

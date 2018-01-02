@@ -1,57 +1,27 @@
-{% extends 'base.html.twig' %}
-
+{% extends '@WCSCoav/base.html.twig' %}
 {% block body %}
-    <h1>Flights list</h1>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Departure</th>
-                <th>Arrival</th>
-                <th>Nbfreeseats</th>
-                <th>Seatprice</th>
-                <th>Takeofftime</th>
-                <th>Publicationdate</th>
-                <th>Description</th>
-                <th>Pilot</th>
-                <th>Plane</th>
-                <th>Wasdone</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <h2>Next flights</h2>
+    <div class="row">
         {% for flight in flights %}
-            <tr>
-                <td><a href="{{ path('flight_show', { 'id': flight.id }) }}">{{ flight.id }}</a></td>
-                <td>{{ flight.departure }}</td>
-                <td>{{ flight.arrival }}</td>
-                <td>{{ flight.nbFreeSeats }}</td>
-                <td>{{ flight.seatPrice }}</td>
-                <td>{% if flight.takeOffTime %}{{ flight.takeOffTime|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if flight.publicationDate %}{{ flight.publicationDate|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ flight.description }}</td>
-                <td>{{ flight.pilot }}</td>
-                <td>{{ flight.plane }}</td>
-                <td>{% if flight.wasDone %}Yes{% else %}No{% endif %}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('flight_show', { 'id': flight.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('flight_edit', { 'id': flight.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <div class="col-md-3 flightInfo">
+                <div class="flightHeader">
+                    <h3>{{ flight.takeOffTime|date('d M Y') }}</h3>
+                </div>
+                <div class="flightBody">
+                    <p>{{ flight.takeOffTime|date('H:i') }} </p>
+                    <p>{{ flight.landingTime|date('H:i') }} </p>
+                </div>
+                <div class="flightFooter">
 
-    <ul>
-        <li>
-            <a href="{{ path('flight_new') }}">Create a new flight</a>
-        </li>
-    </ul>
+                    <div class="col-md-4">Free Seats {{ flight.nbFreeSeats }}</div>
+                    <div class="col-md-5">Price per Seat {{ flight.seatPrice }} $USD</div>
+                    <a href="{{ path('flight_show', { 'id': flight.id }) }}"><i class="fa fa-plus-circle"
+                                                                                aria-hidden="true"></i></a>
+                </div>
+            </div>
+        {% endfor %}
+        {% include '@WCSCoav/partials/map.html.twig' %}
+    </div>
+
+
 {% endblock %}

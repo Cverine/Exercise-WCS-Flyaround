@@ -1,21 +1,77 @@
-{% extends 'base.html.twig' %}
+{% extends '@WCSCoav/base.html.twig' %}
+
 
 {% block body %}
-    <h1>Flight edit</h1>
+    <h2>Edit or Delete a Flight</h2>
+    <div class="row>">
+        <div class="col-md-6 col-md-offset-3 editFlightBody">
+            {{ form_start(edit_form) }}
+            <div class="form-group col-md-8 col-md-offset-1">
+                <h3>{{ form_label(edit_form.departure) }}</h3>
+                {{ form_errors(edit_form.departure) }}
+                {{ form_widget(edit_form.departure) }}
+            </div>
+            <div class="form-group col-md-8 col-md-offset-1">
+                <h3>{{ form_label(edit_form.arrival) }}</h3>
+                {{ form_errors(edit_form.arrival) }}
+                {{ form_widget(edit_form.arrival) }}
+            </div>
+            <div class="form-group col-md-8 col-md-offset-1">
+                <h3>{{ form_label(edit_form.nbFreeSeats) }}</h3>
+                {{ form_errors(edit_form.nbFreeSeats) }}
+                {{ form_widget(edit_form.nbFreeSeats) }}
+            </div>
+            <div class="form-group col-md-8 col-md-offset-1">
+                <h3>{{ form_label(edit_form.seatPrice) }}</h3>
+                {{ form_errors(edit_form.seatPrice) }}
+                {{ form_widget(edit_form.seatPrice) }}
+            </div>
+            <div class="form-group col-md-5 col-md-offset-1">
+                <h3>{{ form_label(edit_form.takeOffTime) }}</h3>
+                {{ form_errors(edit_form.takeOffTime) }}
+                {{ form_widget(edit_form.takeOffTime) }}
+            </div>
+            <div class="form-group col-md-5">
+                <h3>{{ form_label(edit_form.landingTime) }}</h3>
+                {{ form_errors(edit_form.landingTime) }}
+                {{ form_widget(edit_form.landingTime) }}
+            </div>
+            <div class="form-group col-md-8 col-md-offset-1">
+                <h3>{{ form_label(edit_form.description) }}</h3>
+                {{ form_errors(edit_form.description) }}
+                {{ form_widget(edit_form.description) }}
+            </div>
+            <div class="form-group col-md-8 col-md-offset-1">
+                <h3>{{ form_label(edit_form.pilot) }}</h3>
+                {{ form_errors(edit_form.pilot) }}
+                {{ form_widget(edit_form.pilot) }}
+            </div>
+            <div class="form-group col-md-8 col-md-offset-1">
+                <h3>{{ form_label(edit_form.plane) }}</h3>
+                {{ form_errors(edit_form.plane) }}
+                {{ form_widget(edit_form.plane) }}
+            </div>
+            <div class="form-group col-md-8 col-md-offset-1">
+                <h3>{{ form_label(edit_form.wasDone) }}</h3>
+                {{ form_errors(edit_form.wasDone) }}
+                {{ form_widget(edit_form.wasDone) }}
+            </div>
+        </div>
+            <div class="flightFooter col-md-6 col-md-offset-3">
+                <div class="col-md-4">
+                    <a href="{{ path('flight_index') }}">Back to the list</a>
+                </div>
+                <div class="col-md-4">
 
-    {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
-    {{ form_end(edit_form) }}
+                    <input type="submit" value="Edit"/>
 
-    <ul>
-        <li>
-            <a href="{{ path('flight_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+                    {{ form_end(edit_form) }}
+                </div>
+                <div class="col-md-4">
+                        {{ form_start(delete_form) }}
+                        <input type="submit" value="Delete">
+                        {{ form_end(delete_form) }}
+                </div>
+        </div>
+    </div>
 {% endblock %}

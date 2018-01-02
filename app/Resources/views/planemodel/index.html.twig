@@ -1,47 +1,25 @@
-{% extends 'base.html.twig' %}
+{% extends '@WCSCoav/base.html.twig' %}
 
 {% block body %}
-    <h1>Planemodels list</h1>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Model</th>
-                <th>Manufacturer</th>
-                <th>Cruisespeed</th>
-                <th>Planenbseats</th>
-                <th>Isavailable</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <h2>Our Planemodels</h2>
+    <div class="row">
         {% for planeModel in planeModels %}
-            <tr>
-                <td><a href="{{ path('planemodel_show', { 'id': planeModel.id }) }}">{{ planeModel.id }}</a></td>
-                <td>{{ planeModel.model }}</td>
-                <td>{{ planeModel.manufacturer }}</td>
-                <td>{{ planeModel.cruiseSpeed }}</td>
-                <td>{{ planeModel.planeNbSeats }}</td>
-                <td>{% if planeModel.isAvailable %}Yes{% else %}No{% endif %}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('planemodel_show', { 'id': planeModel.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('planemodel_edit', { 'id': planeModel.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
+            <div class="col-md-3 flightInfo">
+                <div class="flightHeader">
+                    <h3>{{ planeModel.model }}</h3>
+                </div>
+                <div class="flightBody">
+                    <h3>{{ planeModel.manufacturer }}</h3>
+                </div>
+                <div class="flightFooter">
+                    <div class="col-md-6"><a href="{{ path('planemodel_show', { 'id': planeModel.id }) }}"><i
+                                    class="fa fa-plus-circle" aria-hidden="true"></i></a></div>
+                    <div class="col-md-6"><a href="{{ path('planemodel_edit', { 'id': planeModel.id }) }}"><i
+                                    class="fa fa-pencil-square-o" aria-hidden="true"></i></a></div>
+                </div>
+            </div>
         {% endfor %}
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('planemodel_new') }}">Create a new planeModel</a>
-        </li>
-    </ul>
+    </div>
+    <h2>Create a new planeModel<a href="{{ path('planemodel_new') }}"><i class="fa fa-angle-double-right"
+                                                                         aria-hidden="true"></i></a></h2>
 {% endblock %}

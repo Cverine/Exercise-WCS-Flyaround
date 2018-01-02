@@ -37,6 +37,8 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    form_themes:
+        - bootstrap_3_layout.html.twig
 
 # Doctrine Configuration
 doctrine:
@@ -62,6 +64,7 @@ doctrine:
 
 # Swiftmailer Configuration
 swiftmailer:
+
     transport: '%mailer_transport%'
     host: '%mailer_host%'
     username: '%mailer_user%'

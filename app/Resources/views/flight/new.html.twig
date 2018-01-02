@@ -1,16 +1,66 @@
-{% extends 'base.html.twig' %}
+{% extends '@WCSCoav/base.html.twig' %}
 
 {% block body %}
-    <h1>Flight creation</h1>
+    <h2>Create a new Flight</h2>
+    <div class="row>">
+        <div class="col-md-6 col-md-offset-3 editFlightBody">
+            {{ form_start(form) }}
+            <div class="form-group col-md-8 col-md-offset-1">
+                <h3>{{ form_label(form.departTerrain, 'From')}}</h3>
+                {{ form_errors(form.departTerrain) }}
+                {{ form_widget(form.departTerrain) }}
+            </div>
+            <div class="form-group col-md-8 col-md-offset-1">
+                <h3>{{ form_label(form.arrivalTerrain, 'To') }}</h3>
+                {{ form_errors(form.arrivalTerrain) }}
+                {{ form_widget(form.arrivalTerrain) }}
+            </div>
+            <div class="form-group col-md-8 col-md-offset-1">
+                <h3>{{ form_label(form.nbFreeSeats, 'Free Seats') }}</h3>
+                {{ form_errors(form.nbFreeSeats) }}
+                {{ form_widget(form.nbFreeSeats) }}
+            </div>
+            <div class="form-group col-md-8 col-md-offset-1">
+                <h3>{{ form_label(form.seatPrice, 'Seat Price in €') }}</h3>
+                {{ form_errors(form.seatPrice) }}
+                {{ form_widget(form.seatPrice) }}
+            </div>
+            <div class="form-group col-md-5 col-md-offset-1">
+                <h3>{{ form_label(form.takeOffTime, 'Take Off Time') }}</h3>
+                {{ form_errors(form.takeOffTime) }}
+                {{ form_widget(form.takeOffTime) }}
+            </div>
+            <div class="form-group col-md-5">
+                <h3>{{ form_label(form.landingTime,'Landing Time') }}</h3>
+                {{ form_errors(form.landingTime) }}
+                {{ form_widget(form.landingTime) }}
+            </div>
+            <div class="form-group col-md-8 col-md-offset-1">
+                <h3>{{ form_label(form.description, 'Description') }}</h3>
+                {{ form_errors(form.description) }}
+                {{ form_widget(form.description) }}
+            </div>
+            <div class="form-group col-md-8 col-md-offset-1">
+                <h3>{{ form_label(form.plane_model, 'Plane Model') }}</h3>
+                {{ form_errors(form.plane_model) }}
+                {{ form_widget(form.plane_model) }}
+            </div>
+            <div class="form-group col-md-8 col-md-offset-1">
+                <h3>{{ form_label(form.wasDone) }}</h3>
+                {{ form_errors(form.wasDone) }}
+                {{ form_widget(form.wasDone) }}
+            </div>
+        </div>
+        <div class="flightFooter col-md-6 col-md-offset-3">
+            <div class="col-md-4">
+                <a href="{{ path('flight_index') }}">Back to the list</a>
+            </div>
+            <div class="col-md-4">
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
+                <input type="submit" value="Create"/>
 
-    <ul>
-        <li>
-            <a href="{{ path('flight_index') }}">Back to the list</a>
-        </li>
-    </ul>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}

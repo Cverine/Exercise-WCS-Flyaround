@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends '@WCSCoav/base.html.twig' %}
 
 {% block body %}
     <h1>Terrain</h1>
@@ -48,5 +48,9 @@
         <li>
             <a href="{{ path('terrain_index') }}">Back to the list</a>
         </li>
+        <li>
+            <a href="{{ path('terrain_edit', { 'id': terrain.id }) }}">Edit</a>
+        </li>
+
     </ul>
 {% endblock %}

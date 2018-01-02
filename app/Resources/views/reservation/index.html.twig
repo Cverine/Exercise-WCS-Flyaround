@@ -1,47 +1,38 @@
-{% extends 'base.html.twig' %}
+{% extends '@WCSCoav/base.html.twig' %}
 
 {% block body %}
-    <h1>Reservations list</h1>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nbreservedseats</th>
-                <th>Publicationdate</th>
-                <th>Passenger</th>
-                <th>Flight</th>
-                <th>Wasdone</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <h2>Your next Reservations</h2>
+    <div class="row">
         {% for reservation in reservations %}
-            <tr>
-                <td><a href="{{ path('reservation_show', { 'id': reservation.id }) }}">{{ reservation.id }}</a></td>
-                <td>{{ reservation.nbReservedSeats }}</td>
-                <td>{% if reservation.publicationDate %}{{ reservation.publicationDate|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ reservation.passenger }}</td>
-                <td>{{ reservation.flight }}</td>
-                <td>{% if reservation.wasDone %}Yes{% else %}No{% endif %}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('reservation_show', { 'id': reservation.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('reservation_edit', { 'id': reservation.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <div class="col-md-3 flightInfo">
+                <div class="flightHeader">
+                    <h3>{{ reservation.flight.takeOffTime|date('d M Y') }}</h3>
+                </div>
+                <div class="flightBody">
+                    <h3>{{ reservation.flight.departure.name }}</h3>
+                    <p>{{ reservation.flight.takeOffTime|date('H:i') }} - {{ reservation.flight.departure.icao }}</p>
+                    <h3>{{ reservation.flight.arrival.name }}</h3>
+                    <p>{{ reservation.flight.landingTime|date('H:i') }} - {{ reservation.flight.arrival.icao }}</p>
+                    <h3>Passengers</h3>
+                    <p>{{ reservation.passenger }}</p>
+                    <h3>Plane Reserved Seats</h3>
+                    <p>{{ reservation.nbReservedSeats }}</p>
+                </div>
+                <div class="flightFooter">
 
-    <ul>
-        <li>
-            <a href="{{ path('reservation_new') }}">Create a new reservation</a>
-        </li>
-    </ul>
+                    <div class="col-md-5">Price per Seat {{ reservation.flight.seatPrice }} $USD</div>
+                    <a href="{{ path('reservation_show', { 'id': reservation.id }) }}"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="col-md-2 col-md-offset-5 flightInfo">
+            <div class="flightBody">
+                <h3>Make a new reservation</h3>
+            </div>
+            <div class="flightFooter">
+                <a href="{{ path('reservation_new') }}"><i class="fa fa-suitcase" aria-hidden="true"></i></a>
+            </div>
+        </div>
+    </div>
 {% endblock %}

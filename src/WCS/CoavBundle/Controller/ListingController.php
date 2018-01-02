@@ -36,4 +36,6 @@ class ListingController extends Controller
             'planemodel'   => $planemodel
         ));
     }
+
+
 }

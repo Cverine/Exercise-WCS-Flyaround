@@ -1,21 +1,51 @@
-{% extends 'base.html.twig' %}
+{% extends '@WCSCoav/base.html.twig' %}
 
 {% block body %}
-    <h1>Planemodel edit</h1>
+    <h2>Edit or Delete a Planemodel</h2>
+    <div class="row>">
+        <div class="col-md-6 col-md-offset-3 editFlightBody">
+            {{ form_start(edit_form) }}
+            <div class="form-group col-md-8 col-md-offset-1">
+                <h3>{{ form_label(edit_form.model) }}</h3>
+                {{ form_errors(edit_form.model) }}
+                {{ form_widget(edit_form.model) }}
+            </div>
+            <div class="form-group col-md-8 col-md-offset-1">
+                <h3>{{ form_label(edit_form.manufacturer) }}</h3>
+                {{ form_errors(edit_form.manufacturer) }}
+                {{ form_widget(edit_form.manufacturer) }}
+            </div>
+            <div class="form-group col-md-8 col-md-offset-1">
+                <h3>{{ form_label(edit_form.cruiseSpeed) }}</h3>
+                {{ form_errors(edit_form.cruiseSpeed) }}
+                {{ form_widget(edit_form.cruiseSpeed) }}
+            </div>
+            <div class="form-group col-md-8 col-md-offset-1">
+                <h3>{{ form_label(edit_form.planeNbSeats) }}</h3>
+                {{ form_errors(edit_form.planeNbSeats) }}
+                {{ form_widget(edit_form.planeNbSeats) }}
+            </div>
+            <div class="form-group col-md-5 col-md-offset-1">
+                <h3>{{ form_label(edit_form.isAvailable) }}</h3>
+                {{ form_errors(edit_form.isAvailable) }}
+                {{ form_widget(edit_form.isAvailable) }}
+            </div>
+        </div>
+        <div class="flightFooter col-md-6 col-md-offset-3">
+            <div class="col-md-4">
+                <a href="{{ path('planemodel_index') }}">Back to the list</a>
+            </div>
+            <div class="col-md-4">
 
-    {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
-    {{ form_end(edit_form) }}
+                <input type="submit" value="Edit"/>
 
-    <ul>
-        <li>
-            <a href="{{ path('planemodel_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
+                {{ form_end(edit_form) }}
+            </div>
+            <div class="col-md-4">
+                {{ form_start(delete_form) }}
                 <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+                {{ form_end(delete_form) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}

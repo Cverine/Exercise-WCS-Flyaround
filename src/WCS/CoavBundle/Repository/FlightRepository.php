@@ -10,4 +10,15 @@ namespace WCS\CoavBundle\Repository;
  */
 class FlightRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function findLastFlights()
+    {
+        $qb = $this
+                ->createQueryBuilder('f')
+                ->orderBy('f.takeOffTime', 'ASC')
+                ->setMaxResults(3)
+                ->getQuery();
+        return $qb->getResult();
+    }
+
 }

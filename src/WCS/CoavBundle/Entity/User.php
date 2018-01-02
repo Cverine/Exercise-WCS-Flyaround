@@ -3,6 +3,8 @@
 namespace WCS\CoavBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * User
@@ -10,8 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="WCS\CoavBundle\Repository\UserRepository")
  */
-class User
+class User implements UserInterface, \Serializable
 {
+    const USER_ROLE_TRAVELER    = 1;
+    const USER_ROLE_PILOT       = 2;
+    const USER_ROLE_ADMIN       = 3;
+
     /**
      * @var int
      *
@@ -27,6 +33,13 @@ class User
      * @ORM\Column(name="userName", type="string", length=32)
      */
     private $userName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=255)
+     */
+    private $password;
 
     /**
      * @var string
@@ -84,13 +97,6 @@ class User
     private $note;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="reviews", type="integer", nullable=true)
-     */
-    private $reviews;
-
-    /**
      * @var bool
      *
      * @ORM\Column(name="isACertifiedPilot", type="boolean")
@@ -105,30 +111,30 @@ class User
     private $isActive;
 
     /**
-     * @ORM\ManyToMany(targetEntity="WCS\CoavBundle\Entity\Reservation", inversedBy="passengers")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToMany(targetEntity="WCS\CoavBundle\Entity\Reservation")
      */
     private $reservations;
 
     /**
-     * @@ORM\OneToMany(targetEntity="WCS\CoavBundle\Entity\Flight", mappedBy="pilot")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToMany(targetEntity="WCS\CoavBundle\Entity\Review", mappedBy="user")
      */
-    private $pilots;
+    private $reviews;
 
     /**
-     * @ORM\OneToMany(targetEntity="WCS\CoavBundle\Entity\Review", mappedBy="userRated")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToMany(targetEntity="WCS\CoavBundle\Entity\Flight", mappedBy="user")
      */
-    private $usersRated;
+    private $flights;
+
+    // AUTO GENERATED METHODS ---------------------------------
 
     /**
-     * @ORM\OneToMany(targetEntity="WCS\CoavBundle\Entity\Review", mappedBy="reviewAuthor")
-     * @ORM\JoinColumn(nullable=false)
+     * Constructor
      */
-    private $reviewsAuthor;
-
-
+    public function __construct()
+    {
+        $this->reservations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->isActive = true;
+    }
 
     /**
      * Get id
@@ -357,30 +363,6 @@ class User
     }
 
     /**
-     * Set reviews
-     *
-     * @param integer $reviews
-     *
-     * @return User
-     */
-    public function setReviews($reviews)
-    {
-        $this->reviews = $reviews;
-
-        return $this;
-    }
-
-    /**
-     * Get reviews
-     *
-     * @return int
-     */
-    public function getReviews()
-    {
-        return $this->reviews;
-    }
-
-    /**
      * Set isACertifiedPilot
      *
      * @param boolean $isACertifiedPilot
@@ -427,13 +409,6 @@ class User
     {
         return $this->isActive;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->reservations = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Add reservation
@@ -470,86 +445,151 @@ class User
     }
 
     /**
-     * @return mixed
-     */
-    public function getPilots()
-    {
-        return $this->pilots;
-    }
-
-    /**
-     * @param mixed $pilots
-     */
-    public function setPilots($pilots)
-    {
-        $this->pilots = $pilots;
-    }
-
-    /**
-     * Add usersRated
+     * Set password
      *
-     * @param \WCS\CoavBundle\Entity\Review $usersRated
+     * @param string $password
      *
      * @return User
      */
-    public function addUsersRated(\WCS\CoavBundle\Entity\Review $usersRated)
+    public function setPassword($password)
     {
-        $this->usersRated[] = $usersRated;
+        $this->password = $password;
 
         return $this;
     }
 
     /**
-     * Remove usersRated
+     * Get password
      *
-     * @param \WCS\CoavBundle\Entity\Review $usersRated
+     * @return string
      */
-    public function removeUsersRated(\WCS\CoavBundle\Entity\Review $usersRated)
+    public function getPassword()
     {
-        $this->usersRated->removeElement($usersRated);
+        return $this->password;
     }
 
-    /**
-     * Get usersRated
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getUsersRated()
+    // ADDED METHODS
+    public function __toString()
     {
-        return $this->usersRated;
+        return $this->firstName . " " . $this->lastName . " " . $this->reviews;
     }
 
+    public function getSalt()
+    {
+        // you *may* need a real salt depending on your encoder
+        // see section on salt below
+        //return null;
+    }
+
+    public function getRoles()
+    {
+        if ($this->getRole() == self::USER_ROLE_TRAVELER) {
+            return array('ROLE_TRAVELER');
+        }
+        if ($this->getRole() == self::USER_ROLE_PILOT) {
+            return array('ROLE_PILOT');
+        }
+        if ($this->getRole() == self::USER_ROLE_ADMIN) {
+            return array('ROLE_ADMIN');
+        }
+
+        return array();
+    }
+
+    public function eraseCredentials()
+    {
+    }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->userName,
+            $this->password,
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->userName,
+            $this->password,
+            // see section on salt below
+            // $this->salt
+            ) = unserialize($serialized);
+    }
+
+
     /**
-     * Add reviewsAuthor
+     * Add review
      *
-     * @param \WCS\CoavBundle\Entity\Review $reviewsAuthor
+     * @param \WCS\CoavBundle\Entity\Review $review
      *
      * @return User
      */
-    public function addReviewsAuthor(\WCS\CoavBundle\Entity\Review $reviewsAuthor)
+    public function addReview(\WCS\CoavBundle\Entity\Review $review)
     {
-        $this->reviewsAuthor[] = $reviewsAuthor;
+        $this->reviews[] = $review;
 
         return $this;
     }
 
     /**
-     * Remove reviewsAuthor
+     * Remove review
      *
-     * @param \WCS\CoavBundle\Entity\Review $reviewsAuthor
+     * @param \WCS\CoavBundle\Entity\Review $review
      */
-    public function removeReviewsAuthor(\WCS\CoavBundle\Entity\Review $reviewsAuthor)
+    public function removeReview(\WCS\CoavBundle\Entity\Review $review)
     {
-        $this->reviewsAuthor->removeElement($reviewsAuthor);
+        $this->reviews->removeElement($review);
     }
 
     /**
-     * Get reviewsAuthor
+     * Get reviews
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getReviewsAuthor()
+    public function getReviews()
     {
-        return $this->reviewsAuthor;
+        return $this->reviews;
+    }
+
+    /**
+     * Add flight
+     *
+     * @param \WCS\CoavBundle\Entity\Flight $flight
+     *
+     * @return User
+     */
+    public function addFlight(\WCS\CoavBundle\Entity\Flight $flight)
+    {
+        $this->flights[] = $flight;
+
+        return $this;
+    }
+
+    /**
+     * Remove flight
+     *
+     * @param \WCS\CoavBundle\Entity\Flight $flight
+     */
+    public function removeFlight(\WCS\CoavBundle\Entity\Flight $flight)
+    {
+        $this->flights->removeElement($flight);
+    }
+
+    /**
+     * Get flights
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFlights()
+    {
+        return $this->flights;
     }
 }

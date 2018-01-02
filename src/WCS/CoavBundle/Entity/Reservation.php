@@ -3,6 +3,7 @@
 namespace WCS\CoavBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Reservation
@@ -23,8 +24,11 @@ class Reservation
 
     /**
      * @var int
-     *
      * @ORM\Column(name="nbReservedSeats", type="smallint")
+     * @Assert\Range(
+     *     min=1,
+     *     minMessage="Specify how many seats you need.",                                            invalidMessage="The number is not a valid number."
+     * )
      */
     private $nbReservedSeats;
 
@@ -36,15 +40,7 @@ class Reservation
     private $publicationDate;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="passenger", type="string", length=32)
-     */
-    private $passenger;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="WCS\CoavBundle\Entity\Flight", inversedBy="flights")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="WCS\CoavBundle\Entity\Flight", inversedBy="reservations")
      */
     private $flight;
 
@@ -54,13 +50,6 @@ class Reservation
      * @ORM\Column(name="wasDone", type="boolean")
      */
     private $wasDone;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="WCS\CoavBundle\Entity\User", mappedBy="reservations")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $passengers;
-
 
     /**
      * Get id
@@ -121,30 +110,6 @@ class Reservation
     }
 
     /**
-     * Set passenger
-     *
-     * @param string $passenger
-     *
-     * @return Reservation
-     */
-    public function setPassenger($passenger)
-    {
-        $this->passenger = $passenger;
-
-        return $this;
-    }
-
-    /**
-     * Get passenger
-     *
-     * @return string
-     */
-    public function getPassenger()
-    {
-        return $this->passenger;
-    }
-
-    /**
      * Set flight
      *
      * @param string $flight
@@ -196,40 +161,6 @@ class Reservation
      */
     public function __construct()
     {
-        $this->passengers = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add passenger
-     *
-     * @param \WCS\CoavBundle\Entity\User $passenger
-     *
-     * @return Reservation
-     */
-    public function addPassenger(\WCS\CoavBundle\Entity\User $passenger)
-    {
-        $this->passengers[] = $passenger;
-
-        return $this;
-    }
-
-    /**
-     * Remove passenger
-     *
-     * @param \WCS\CoavBundle\Entity\User $passenger
-     */
-    public function removePassenger(\WCS\CoavBundle\Entity\User $passenger)
-    {
-        $this->passengers->removeElement($passenger);
-    }
-
-    /**
-     * Get passengers
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPassengers()
-    {
-        return $this->passengers;
+        $this->flight = new \Doctrine\Common\Collections\ArrayCollection();
     }
 }

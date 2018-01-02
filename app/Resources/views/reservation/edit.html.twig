@@ -1,21 +1,47 @@
-{% extends 'base.html.twig' %}
+{% extends '@WCSCoav/base.html.twig' %}
 
 {% block body %}
-    <h1>Reservation edit</h1>
-
-    {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
-    {{ form_end(edit_form) }}
-
-    <ul>
-        <li>
-            <a href="{{ path('reservation_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
+    <h2>Edit your Reservation</h2>
+    <div class="row>">
+        <div class="col-md-6 col-md-offset-3 editFlightBody">
+            {{ form_start(edit_form) }}
+            <div class="form-group col-md-8 col-md-offset-1">
+                <h3>{{ form_label(edit_form.flight) }}</h3>
+                {{ form_errors(edit_form.flight) }}
+                {{ form_widget(edit_form.flight) }}
+            </div>
+            <div class="form-group col-md-8 col-md-offset-1">
+                <h3>{{ form_label(edit_form.passenger) }}</h3>
+                {{ form_errors(edit_form.passenger) }}
+                {{ form_widget(edit_form.passenger) }}
+            </div>
+            <div class="form-group col-md-8 col-md-offset-1">
+                <h3>{{ form_label(edit_form.nbReservedSeats) }}</h3>
+                {{ form_errors(edit_form.nbReservedSeats) }}
+                {{ form_widget(edit_form.nbReservedSeats) }}
+            </div>
+            <div class="form-group col-md-8 col-md-offset-1 hidden">
+                <h3>{{ form_label(edit_form.publicationDate) }}</h3>
+                {{ form_widget(edit_form.publicationDate) }}
+            </div>
+            <div class="form-group col-md-8 col-md-offset-1 hidden">
+                <h3>{{ form_label(edit_form.wasDone) }}</h3>
+                {{ form_widget(edit_form.wasDone) }}
+            </div>
+        </div>
+        <div class="flightFooter col-md-6 col-md-offset-3">
+            <div class="col-md-4">
+                <a href="{{ path('reservation_index') }}">Back to the list</a>
+            </div>
+            <div class="col-md-4">
+                <input type="submit" value="Edit"/>
+                {{ form_end(edit_form) }}
+            </div>
+            <div class="col-md-4">
+                {{ form_start(delete_form) }}
                 <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+                {{ form_end(delete_form) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}

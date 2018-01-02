@@ -1,16 +1,95 @@
-<h1>Routes disponibles :</h1>
+{% extends '@WCSCoav/base.html.twig' %}
 
-<ul>
-    <li>
-        <a href="{{ path('planemodel_index') }}">Voir les avions</a>
-    </li>
-    <li>
-        <a href="{{ path('reservation_index') }}">Voir les réservations</a>
-    </li>
-    <li>
-        <a href="{{ path('flight_index') }}">Voir les vols</a>
-    </li>
-    <li>
-        <a href="{{ path('terrain_index') }}">Voir les terrains</a>
-    </li>
-</ul>
+{% block body %}
+
+    <h2>All FlyAround</h2>
+    <div class="container-index">
+        <div class="block-title">
+            <h3>Next Flights</h3>
+            <a href="{{ path('flight_index') }}">All Flights</a>
+        </div>
+
+        <div class="blockDetail">
+            {% for flight in flights %}
+                <ul>
+                    <li class="title">{{ flight.departTerrain }} / {{ flight.arrivalTerrain }}</li>
+                    <li>Date : {{ flight.takeOffTime|date('d M Y') }}</li>
+                    <li>D : {{ flight.takeOffTime|date('H:i') }} </li>
+                    <li>A : {{ flight.landingTime|date('H:i') }} </li>
+                    <li>Price : {{ flight.seatPrice }} $USD</li>
+                </ul>
+            {% endfor %}
+        </div>
+        <div class="blockFooter">
+            {% for flight in flights %}
+                <ul>
+                    <li><a href="{{ path('flight_show', { 'id': flight.id }) }}"><i class="fa fa-globe"
+                                                                                    aria-hidden="true"></i></a></li>
+                </ul>
+            {% endfor %}
+        </div>
+    </div>
+
+
+    <div class="container-index">
+        <div class="block-title">
+            <h3>All Plane Models</h3>
+        </div>
+
+        <div class="planeDetail">
+            {% for planeModel in models %}
+                <ul>
+                    <li class="title">{{ planeModel.model }}</li>
+                    <li>Manufacturer : {{ planeModel.manufacturer }}</li>
+                    <li>Cruise Speed : {{ planeModel.cruiseSpeed }} mph</li>
+                    <li>Seats : {{ planeModel.planeNbSeats }} </li>
+                </ul>
+            {% endfor %}
+        </div>
+        <div class="blockFooter">
+            {% for planeModel in models %}
+                <ul>
+                    <li><a href="{{ path('planemodel_show', { 'id': planeModel.id }) }}"><i class="fa fa-plane"
+                                                                                    aria-hidden="true"></i></a></li>
+                </ul>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="container-index">
+        <div class="block-title">
+            <h3>All Airports</h3>
+        </div>
+
+        <div class="terrainDetail">
+            {% for terrain in terrains %}
+                <ul>
+                    <li class="title">{{ terrain.name }}</li>
+                    <li>Icao : {{ terrain.icao }}</li>
+                    <li>Address : {{ terrain.address }} - {{ terrain.city }} </li>
+                    <li>Latitude : {{ terrain.latitude }} </li>
+                    <li>Longitude : {{ terrain.longitude }} </li>
+                </ul>
+            {% endfor %}
+        </div>
+        <div class="blockFooter">
+            {% for terrain in terrains %}
+                <ul>
+                    <li><a href="{{ path('terrain_show', { 'id': terrain.id }) }}"><i class="fa fa-map-marker" aria-hidden="true"></i></a></li>
+                </ul>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    <script>
+        var mymap = L.map('mapid').setView([51.505, -0.09], 13);
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+            maxZoom: 18,
+            id: 'mapbox.streets',
+            accessToken: 'pk.eyJ1IjoiY3ZlcmluZSIsImEiOiJjamI5dmNsc2cwZnF0Mnd1cG14bTd3bWx1In0.Vc2UzKeLDzIUvik3rI9fAA'
+        }).addTo(mymap);
+    </script>
+{% endblock %}

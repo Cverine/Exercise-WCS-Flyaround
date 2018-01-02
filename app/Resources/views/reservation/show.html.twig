@@ -1,36 +1,58 @@
-{% extends 'base.html.twig' %}
+{% extends '@WCSCoav/base.html.twig' %}
 
 {% block body %}
-    <h1>Reservation</h1>
+    <h2>Your reservation</h2>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 flightDetail">
+            <div class="flightHeader">
+                <h3>{{ reservation.flight.departure.name }} - {{ reservation.flight.departure.icao }} / {{ reservation.flight.arrival.name }} - {{ reservation.flight.arrival.icao }}</h3>
+            </div>
+            <div class="flightBody">
+                <table>
+                    <tr>
+                        <th>Departure</th>
+                        <td>{{ reservation.flight.takeOffTime|date('d M Y') }}</td>
+                        <td>{{ reservation.flight.takeOffTime|date('H:i') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Arrival</th>
+                        <td>{{ reservation.flight.landingTime|date('d M Y') }}</td>
+                        <td>{{ reservation.flight.landingTime|date('H:i') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Passenger</th>
+                        <td>{{ reservation.passenger }}</td>
+                    </tr>
+                    <tr>
+                        <th>Reserved Seats</th>
+                        <td>{{ reservation.nbReservedSeats }}</td>
+                    </tr>
+                    <tr>
+                        <th>Seat Price</th>
+                        <td>{{ reservation.flight.seatPrice }} $USD</td>
+                        <td><a href="#">Convert</a></td>
+                    </tr>
+                    <tr>
+                        <th>Reservation Date</th>
+                        <td>{{ reservation.publicationDate|date('d M Y') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Was Done</th>
+                        <td>{% if reservation.wasDone %}Yes{% else %}No{% endif %}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="flightFooter">
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ reservation.id }}</td>
-            </tr>
-            <tr>
-                <th>Nbreservedseats</th>
-                <td>{{ reservation.nbReservedSeats }}</td>
-            </tr>
-            <tr>
-                <th>Publicationdate</th>
-                <td>{% if reservation.publicationDate %}{{ reservation.publicationDate|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Passenger</th>
-                <td>{{ reservation.passenger }}</td>
-            </tr>
-            <tr>
-                <th>Flight</th>
-                <td>{{ reservation.flight }}</td>
-            </tr>
-            <tr>
-                <th>Wasdone</th>
-                <td>{% if reservation.wasDone %}Yes{% else %}No{% endif %}</td>
-            </tr>
-        </tbody>
-    </table>
+                <div class="col-md-4"><a href="{{ path('reservation_index') }}">Back to the list</a></div>
+                <div class="col-md-4"><a href="{{ path('reservation_edit', { 'id': reservation.id }) }}">Edit</a></div>
+                <div class="col-md-4">{{ form_start(delete_form) }}
+                    <input type="submit" value="Delete">
+                    {{ form_end(delete_form) }}</div>
+            </div>
+        </div>
+    </div>
+
 
     <ul>
         <li>

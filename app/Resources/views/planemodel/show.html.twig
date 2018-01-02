@@ -1,48 +1,40 @@
-{% extends 'base.html.twig' %}
+{% extends '@WCSCoav/base.html.twig' %}
 
 {% block body %}
-    <h1>Planemodel</h1>
+    <h2>Planemodel details</h2>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4 flightDetail">
+            <div class="flightHeader">
+                <h3>{{ planeModel.model }}</h3>
+            </div>
+            <div class="flightBody">
+                <table>
+                    <tr>
+                        <th>Manufacturer</th>
+                        <td>{{ planeModel.manufacturer }}</td>
+                    </tr>
+                    <tr>
+                        <th>Cruise Speed</th>
+                        <td>{{ planeModel.cruiseSpeed }} mph</td>
+                    </tr>
+                    <tr>
+                        <th>Number of Seats</th>
+                        <td>{{ planeModel.planeNbSeats }}</td>
+                    </tr>
+                    <tr>
+                        <th>Is Available</th>
+                        <td>{% if planeModel.isAvailable %}Yes{% else %}No{% endif %}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="flightFooter">
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ planeModel.id }}</td>
-            </tr>
-            <tr>
-                <th>Model</th>
-                <td>{{ planeModel.model }}</td>
-            </tr>
-            <tr>
-                <th>Manufacturer</th>
-                <td>{{ planeModel.manufacturer }}</td>
-            </tr>
-            <tr>
-                <th>Cruisespeed</th>
-                <td>{{ planeModel.cruiseSpeed }}</td>
-            </tr>
-            <tr>
-                <th>Planenbseats</th>
-                <td>{{ planeModel.planeNbSeats }}</td>
-            </tr>
-            <tr>
-                <th>Isavailable</th>
-                <td>{% if planeModel.isAvailable %}Yes{% else %}No{% endif %}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('planemodel_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('planemodel_edit', { 'id': planeModel.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+                <div class="col-md-5"><a href="{{ path('planemodel_index') }}">Back to the list</a></div>
+                <div class="col-md-3"><a href="{{ path('planemodel_edit', { 'id': planeModel.id }) }}">Edit</a></div>
+                <div class="col-md-4">{{ form_start(delete_form) }}
+                    <input type="submit" value="Delete">
+                    {{ form_end(delete_form) }}</div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

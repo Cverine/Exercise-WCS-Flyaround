@@ -2,6 +2,7 @@
 
 namespace WCS\CoavBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use WCS\CoavBundle\Entity\Review;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -19,6 +20,7 @@ class ReviewController extends Controller
      *
      * @Route("/", name="review_index")
      * @Method("GET")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function indexAction()
     {
@@ -103,6 +105,7 @@ class ReviewController extends Controller
      *
      * @Route("/{id}", name="review_delete")
      * @Method("DELETE")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function deleteAction(Request $request, Review $review)
     {

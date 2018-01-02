@@ -1,68 +1,53 @@
-{% extends 'base.html.twig' %}
+{% extends '@WCSCoav/base.html.twig' %}
 
 {% block body %}
-    <h1>Flight</h1>
+    <h2>Flight details</h2>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ flight.id }}</td>
-            </tr>
-            <tr>
-                <th>Departure</th>
-                <td>{{ flight.departure }}</td>
-            </tr>
-            <tr>
-                <th>Arrival</th>
-                <td>{{ flight.arrival }}</td>
-            </tr>
-            <tr>
-                <th>Nbfreeseats</th>
-                <td>{{ flight.nbFreeSeats }}</td>
-            </tr>
-            <tr>
-                <th>Seatprice</th>
-                <td>{{ flight.seatPrice }}</td>
-            </tr>
-            <tr>
-                <th>Takeofftime</th>
-                <td>{% if flight.takeOffTime %}{{ flight.takeOffTime|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Publicationdate</th>
-                <td>{% if flight.publicationDate %}{{ flight.publicationDate|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ flight.description }}</td>
-            </tr>
-            <tr>
-                <th>Pilot</th>
-                <td>{{ flight.pilot }}</td>
-            </tr>
-            <tr>
-                <th>Plane</th>
-                <td>{{ flight.plane }}</td>
-            </tr>
-            <tr>
-                <th>Wasdone</th>
-                <td>{% if flight.wasDone %}Yes{% else %}No{% endif %}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="container-show">
+        <div class="flightCard">
+            <div class="block-title">
+                <h3>Departure / Arrival</h3>
+            </div>
+            <div class="flightDetail">
+                <ul>
+                    <li>Departure : {{ flight.takeOffTime|date('d M Y') }}</li>
+                    <li>Take off Time : {{ flight.takeOffTime|date('H:i') }}</li>
+                    <li>Landing Time : {{ flight.landingTime|date('H:i') }}</li>
+                </ul>
+                <ul>
+                    <li>Plane Model : {{ flight.planeModel }}</li>
+                    <li>Manufacturer : {{ flight.planeModel.manufacturer }}</li>
+                    <li>Number of Seats : {{ flight.planeModel.planeNbSeats }}</li>
+                </ul>
+                <ul>
+                    <li>Free Seats : {{ flight.nbFreeSeats }}</li>
+                </ul>
+                <ul>
+                    <li>Seat Price : {{ flight.seatPrice }} $USD</li>
+                </ul>
+                <ul>
+                    <li>Pilot : {{ flight.user.userName }}</li>
+                </ul>
+                <ul>
+                    <li>Description : {{ flight.description }}</li>
+                </ul>
+            </div>
+            <div class="blockFooter">
 
-    <ul>
-        <li>
-            <a href="{{ path('flight_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('flight_edit', { 'id': flight.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+                <a href="{{ path('flight_index') }}" title="Back to the list"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></a>
+                <a href="{{ path('flight_edit', { 'id': flight.id }) }}" title="Edit"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
+                {{ form_start(delete_form) }}
+                <button class="delete" data-toggle="tooltip"
+                        title="Delete" type="submit"><i class="fa fa-trash"></i></button>
+                {{ form_end(delete_form) }}
+
+
+            </div>
+        </div>
+        <div class="mapid">Carte</div>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+
 {% endblock %}

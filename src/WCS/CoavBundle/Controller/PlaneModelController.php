@@ -2,6 +2,8 @@
 
 namespace WCS\CoavBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\Response;
 use WCS\CoavBundle\Entity\PlaneModel;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -36,6 +38,7 @@ class PlaneModelController extends Controller
      *
      * @Route("/new", name="planemodel_new")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_PILOT')")
      */
     public function newAction(Request $request)
     {
@@ -43,7 +46,10 @@ class PlaneModelController extends Controller
         $form = $this->createForm('WCS\CoavBundle\Form\PlaneModelType', $planeModel);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        $validator = $this->get('validator');
+        $errors = $validator->validate($planeModel);
+
+       if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($planeModel);
             $em->flush();
@@ -78,6 +84,7 @@ class PlaneModelController extends Controller
      *
      * @Route("/{id}/edit", name="planemodel_edit")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_PILOT')")
      */
     public function editAction(Request $request, PlaneModel $planeModel)
     {
@@ -103,6 +110,7 @@ class PlaneModelController extends Controller
      *
      * @Route("/{id}", name="planemodel_delete")
      * @Method("DELETE")
+     * @Security("has_role('ROLE_PILOT')")
      */
     public function deleteAction(Request $request, PlaneModel $planeModel)
     {

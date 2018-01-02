@@ -1,0 +1,67 @@
+{% extends '@WCSCoav/base.html.twig' %}
+{% block title %}Login{% endblock %}
+{% block body %}
+
+    <div class="row">
+
+        {% if error %}
+            <div class="alert alert-danger">{{ error.message }}</div>
+        {% endif %}
+
+        <div class="col-sm-6 col-xs-12 text-center">
+            <div class="formConnect signIn">
+                <form action="{{ path('login_check') }}" method="post">
+                    <h5 class="text-center">First Connection</h5>
+                    <div class="form-group">
+                        <label for="userName">User Name</label>
+                        <input type="text" id="userName" name="_username" class="form-control"/>
+                    </div>
+                    <div class="form-group ">
+                        <label for="email">Email</label>
+                        <input type="text" id="email" name="email" class="form-control"/>
+                    </div>
+                    <div class="form-group ">
+                        <label for="password">Password</label>
+                        <input type="text" id="password" name="_password" class="form-control"/>
+                    </div>
+                    <div class="form-group ">
+                        <label for="password">Confirm your password</label>
+                        <input type="text" id="password" name="_password" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="remember_me">Remember me</label>
+                        <input type="checkbox" id="remember_me" name="_remember_me" checked/>
+                    </div>
+                    <div class="containerConnect">
+                        <button class="btn" type="submit" name="action">Sign In</button>
+                    </div>
+                    <div class="containerConnect">
+                        <a href="#">Forgot your password ?</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xs-12 text-center">
+            <div class="formConnect logIn">
+                <form action="{{ path('login_check') }}" method="post">
+                    <h5 class="text-center">Log In</h5>
+                    <div class="form-group">
+                        <label for="userName">User Name</label>
+                        <input type="text" id="userName" name="_username"  class="form-control"/>
+                    </div>
+                    <div class="form-group ">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="_password" class="form-control"/>
+                    </div>
+                    <div class="containerConnect">
+                        <button class="btn" type="submit" name="action">Log In</button>
+                    </div>
+                    <div class="containerConnect">
+                        <a href="#">Forgot your password ?</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
