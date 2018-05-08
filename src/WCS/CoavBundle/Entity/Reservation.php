@@ -27,7 +27,7 @@ class Reservation
      * @ORM\Column(name="nbReservedSeats", type="smallint")
      * @Assert\Range(
      *     min=1,
-     *     minMessage="Specify how many seats you need.",                                            invalidMessage="The number is not a valid number."
+     *     minMessage="Specify how many seats you need.", invalidMessage="The number is not a valid number."
      * )
      */
     private $nbReservedSeats;

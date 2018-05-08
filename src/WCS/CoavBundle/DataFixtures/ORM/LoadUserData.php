@@ -44,7 +44,7 @@ class LoadUserData extends Fixture implements OrderedFixtureInterface
 
         }
         $em->flush();
-        //$this->addReference('user', $user[$i]);
+       // $this->addReference('user', $user[$i]);
     }
 
     public function getOrder()

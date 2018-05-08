@@ -27,7 +27,7 @@ class LoadFlightData extends Fixture implements OrderedFixtureInterface
     public function load(ObjectManager $em)
     {
         $faker = Faker\Factory::create('fr_FR');
-       // $flights = [];
+        $flights = [];
         for ($i = 0; $i < 10; $i++) {
             $flights = new Flight;
             $flights
@@ -36,9 +36,9 @@ class LoadFlightData extends Fixture implements OrderedFixtureInterface
                 ->setTakeOffTime($faker->dateTimeThisYear($max = 'now', $timezone = null))
                 ->setLandingTime($faker->dateTimeThisYear($max = 'now', $timezone = null))
                 ->setDescription($faker->sentence($nbWords = 6, $variableNbWords = true))
-                ->setWasDone($faker->boolean)
+                ->setWasDone($faker->boolean);
                 // ->setPlaneModel($this->getReference('planeModel' . $i))
-                ->setUser($this->getReference('user'));
+              //  ->setUser($this->getReference('user'));
             $em->persist($flights);
             $em->flush();
             //  $this->addReference('flight', $flights[$i]);

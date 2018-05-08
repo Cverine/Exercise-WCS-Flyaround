@@ -97,23 +97,6 @@ class Terrain
      */
     private $city;
 
-    /**
-     * @var string
-     * @ORM\Column(name="zipcode", type="string", length=16)
-     * @Assert\Type(
-     *     type = "integer",
-     *     message = "{{ value }} is not a valid zipcode. Zipcode must be 5 numbers long."
-     * )
-     * @Assert\Length(
-     *     min = 5,
-     *     max = 5,
-     *     exactMessage="Zipcode should have exactly {{ limit }} numbers."
-     * )
-     * @Assert\NotNull(
-     *     message = "Zipcode must be defined."
-     * )
-     */
-    private $zipcode;
 
     /**
      * @var string

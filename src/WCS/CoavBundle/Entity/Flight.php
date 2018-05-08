@@ -29,7 +29,8 @@ class Flight
      * @ORM\Column(name="nbFreeSeats", type="smallint")
      * @Assert\Range(
      *     min=1,
-     *     minMessage="The flight must have at least {{ limit }} seat.",                             invalidMessage="The number is not a valid number."
+     *     minMessage="The flight must have at least {{ limit }} seat.",
+     *     invalidMessage="The number is not a valid number."
      * )
      */
     private $nbFreeSeats;

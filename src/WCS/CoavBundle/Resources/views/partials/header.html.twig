@@ -1,11 +1,11 @@
 <div class="container-fluid">
     <div id="nav">
         <ul class="menu">
-            <li><a href="{{ path('homepage') }}">About FlyAround</a></li>
-            <li><a href="{{ path('flight_index') }}">Flights</a></li>
-            <li><a href="{{ path('terrain_index') }}">Destinations</a></li>
-            <li><a href="{{ path('planemodel_index') }}">Plane Models</a></li>
-            <li><a href="{{ path('user_new') }}">Sign In</a></li>
+            <li><a href="{{ path('homepage') }}">What is FlyAround ?</a></li>
+            <li><a href="{{ path('flight_index') }}">Flights & Resa Infos</a></li>
+            <li><a href="{{ path('user_new') }}">Want to join Flyaround ?</a></li>
+            <li><a href="#">About Me/Portfolio</a></li>
+            <li><a href="#">Contact Me</a></li>
         </ul>
 
         <!-- LE CONTENU DE LA POPUP -->
@@ -29,7 +29,7 @@
         <!-- FIN DE LA POPUP -->
         <div class="login">
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-            <button class="popup-button" href="{{ path('logout') }}"><a>Logout</a></button>
+            <button class="popup-button"><a href="{{ path('logout') }}">Logout</a></button>
 
         {% else %}
             <button class="popup-button" data-modal="popup"><a>Log In</a></button>
@@ -37,7 +37,7 @@
         </div>
     </div>
     <div id="flyaround">
-        <h1>FlyAround</h1>
+        <h1><a href="{{ path('homepage') }}">FlyAround</a></h1>
         <p>Share your flight</p>
     </div>
     <div class="overlay"></div><!-- La div overlay Modale -->
