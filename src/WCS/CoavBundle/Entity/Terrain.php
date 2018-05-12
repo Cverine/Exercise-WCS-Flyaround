@@ -77,9 +77,6 @@ class Terrain
     /**
      * @var string
      * @ORM\Column(name="address", type="string", length=128)
-     * @Assert\NotNull(
-     *     message = "Enter the airport's complete address."
-     * )
      *
      */
     private $address;

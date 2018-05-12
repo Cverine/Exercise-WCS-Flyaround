@@ -13,16 +13,16 @@ class EmailService
 {
     const MAIL_FROM = "severinelab@gmail.com";
 
-    const TYPE_MAIL_NEW_USER = [
-        'key' => 1,
-        'renderHtml' => 'email/newUser.html.twig',
-        'renderTxt' => 'email/newUSer.txt.twig',
-    ];
-    const TYPE_MAIL_CONFIRM_PASSWORD = [
-        'key' => 2,
-        'renderHtml' => 'email/password.html.twig',
-        'renderTxt' => 'email/password.txt.twig',
-    ];
+//    const TYPE_MAIL_NEW_USER = [
+//        'key' => 1,
+//        'renderHtml' => 'email/newUser.html.twig',
+//        'renderTxt' => 'email/newUSer.txt.twig',
+//    ];
+//    const TYPE_MAIL_CONFIRM_PASSWORD = [
+//        'key' => 2,
+//        'renderHtml' => 'email/password.html.twig',
+//        'renderTxt' => 'email/password.txt.twig',
+//    ];
 
     protected $mailer;
 
