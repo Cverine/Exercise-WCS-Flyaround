@@ -8,14 +8,12 @@
 
 namespace WCS\CoavBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use WCS\CoavBundle\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker;
 
-class LoadUserData extends Fixture implements OrderedFixtureInterface
+class LoadUserData extends Fixture
 {
     /**
      * @param ObjectManager $em
@@ -24,7 +22,6 @@ class LoadUserData extends Fixture implements OrderedFixtureInterface
     {
         $faker = Faker\Factory::create('fr_FR');
 
-       // $user = [];
         for ($i = 0; $i < 10; $i++) {
             $user = new User;
             $user
@@ -41,15 +38,8 @@ class LoadUserData extends Fixture implements OrderedFixtureInterface
                 ->setIsACertifiedPilot($faker->boolean)
                 ->setIsActive($faker->boolean);
             $em->persist($user);
-
         }
         $em->flush();
-       // $this->addReference('user', $user[$i]);
-    }
-
-    public function getOrder()
-    {
-        return 1;
     }
 
 }
