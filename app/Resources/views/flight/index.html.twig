@@ -1,27 +1,14 @@
 {% extends '@WCSCoav/base.html.twig' %}
 {% block body %}
-    <h2>Next flights</h2>
-    <div class="row">
-        {% for flight in flights %}
-            <div class="col-md-3 flightInfo">
-                <div class="flightHeader">
-                    <h3>{{ flight.takeOffTime|date('d M Y') }}</h3>
-                </div>
-                <div class="flightBody">
-                    <p>{{ flight.takeOffTime|date('H:i') }} </p>
-                    <p>{{ flight.landingTime|date('H:i') }} </p>
-                </div>
-                <div class="flightFooter">
-
-                    <div class="col-md-4">Free Seats {{ flight.nbFreeSeats }}</div>
-                    <div class="col-md-5">Price per Seat {{ flight.seatPrice }} $USD</div>
-                    <a href="{{ path('flight_show', { 'id': flight.id }) }}"><i class="fa fa-plus-circle"
-                                                                                aria-hidden="true"></i></a>
-                </div>
-            </div>
-        {% endfor %}
-        {% include '@WCSCoav/partials/map.html.twig' %}
+    <div class="search">
+        <h2>Recherchez un vol</h2>
+        <input type="text">
     </div>
+    <div class="flight-results">
+        <h2>Tous les prochains vols</h2>
+        <table></table>
+    </div>
+
 
 
 {% endblock %}

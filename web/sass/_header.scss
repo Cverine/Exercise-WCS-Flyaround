@@ -1,0 +1,81 @@
+@import "variables";
+
+header .container-fluid {
+  display: grid;
+  grid-template-rows: 30px auto;
+  grid-template-columns: 40% 60%;
+
+}
+
+header {
+  //border-bottom: 1px solid black;
+}
+
+#nav {
+  font-family: $font1;
+  font-size: 1.2em;
+  background: rgba(255, 255, 255, 0);
+  grid-row-start: 1;
+  grid-column-start: 2;
+}
+
+.menu {
+  display:grid;
+  list-style-type:none;
+  margin:5px;
+  padding:5px;
+  grid-template-columns: repeat(6, auto);
+  text-align: right;
+
+  li a {
+    color: $color7;
+    text-decoration: none;
+  }
+
+  li a:hover {
+    color: $color5;
+  }
+}
+
+button {
+  display: none;
+  background: #fe5757;
+  border: none;
+  float: right;
+  border-radius: 50px;
+  width: 90px;
+  height: 90px;
+
+  a {
+    color: antiquewhite;
+    font-family: $font1;
+    font-size: 1.7em;
+  }
+}
+
+#flyaround {
+  grid-row-start: 2;
+  margin-left: 50px;
+
+  h1 {
+    //color: $color3;
+    font-family: $font2;
+    font-size: 5em;
+    font-weight: 800;
+    letter-spacing: -4px;
+    text-decoration: none;
+  }
+  a {
+    text-decoration: none;
+    color: $color3;
+
+  }
+  p {
+      font-family: $font2;
+      font-size: 3em;
+      font-weight: 600;
+      color: $color7;
+      letter-spacing: -2px;
+      margin-top: -50px;
+  }
+}
