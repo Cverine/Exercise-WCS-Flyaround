@@ -41,8 +41,18 @@ class FlightController extends Controller
         return $this->render('flight/index.html.twig', array(
             'flights' => $flights,
         ));
+    }
 
+    /**
+     * @Route("/search-terrain", name="search_terrain", defaults={"_format"="json"})
+     * @Method("GET")
+     */
+    public function searchTerrainAction(Request $request)
+    {
+        $q = $request->query->get('term');
+        $results = $this->getDoctrine()->getRepository('WCS\CoavBundle:Terrain')->findLike($q);
 
+        return $this->render(":default/search.json.twig", ['terrains' => $results]);
     }
 
     /**

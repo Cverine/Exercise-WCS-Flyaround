@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use PUGX\AutocompleterBundle\Form\Type\AutocompleteType;
 
 class FlightType extends AbstractType
 {
@@ -17,8 +18,8 @@ class FlightType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('departTerrain', EntityType::class, array(
-            'class' => 'WCS\CoavBundle\Entity\Terrain',
+        $builder->add('departTerrain', AutocompleteType::class, array(
+            'class' => 'WCS\CoavBundle:Flight',
             'choice_label' => 'name',
         ))
                 ->add('arrivalTerrain', EntityType::class, array(

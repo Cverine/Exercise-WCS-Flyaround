@@ -5,4 +5,5 @@ $('#formConnect').on('shown.bs.modal', function () {
 
 $("textarea").attr("maxlength", 1200);
 
-//Carto
+//autocomplete flight form
+
