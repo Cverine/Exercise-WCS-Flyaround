@@ -3,6 +3,7 @@
 namespace WCS\CoavBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -114,6 +115,12 @@ class Airport
      * @ORM\OneToMany(targetEntity=Flight::class, mappedBy="arrivalAirport")
      */
     private $arrivalFlights;
+
+    public function __construct()
+    {
+        $this->arrivalFlights = new ArrayCollection();
+        $this->departFlights = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -293,12 +300,80 @@ class Airport
         return $this->country;
     }
 
+    /**
+     * Add departFlight
+     *
+     * @param Flight $departFlight
+     *
+     * @return Airport
+     */
+    public function addDepartFLight(Flight $departFlight)
+    {
+        $this->departFlights[] = $departFlight;
+
+        return $this;
+    }
+
+    /**
+     * Remove departFlight
+     *
+     * @param Flight $departFlight
+     */
+    public function removeFlight(Flight $departFlight)
+    {
+        $this->departFlights->removeElement($departFlight);
+    }
+
+    /**
+     * Get departFlights
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFlights()
+    {
+        return $this->departFlights;
+    }
+
+    /**
+     * Add arrivalFlight
+     *
+     * @param Flight $arrivalFlight
+     *
+     * @return Airport
+     */
+    public function addArrivalFlight(Flight $arrivalFlight)
+    {
+        $this->arrivalFlights[] = $arrivalFlight;
+
+        return $this;
+    }
+
+    /**
+     * Remove arrivalFlight
+     *
+     * @param Flight $arrivalFlight
+     */
+    public function removeArrivalFlight(Flight $arrivalFlight)
+    {
+        $this->arrivalFlights->removeElement($arrivalFlight);
+    }
+
+    /**
+     * Get arrivalFlights
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getArrivalFlights()
+    {
+        return $this->arrivalFlights;
+    }
+
+
     /* Adding personnal methods */
 
     public function __toString()
     {
         return $this->name . "-" . $this->icao;
     }
-
 
 }

@@ -104,6 +104,13 @@ class Flight
      */
     private $reservations;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->reservations = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -259,15 +266,62 @@ class Flight
         return $this->wasDone;
     }
 
+    /**
+     * Set departAirport
+     *
+     * @param Airport $departAirport
+     *
+     * @return Flight
+     */
+    public function setDepartAirport(Airport $departAirport = null)
+    {
+        $this->departAirport = $departAirport;
+
+        return $this;
+    }
+
+    /**
+     * Get departAirport
+     *
+     * @return Airport
+     */
+    public function getDepartAirport()
+    {
+        return $this->departAirport;
+    }
+
+    /**
+     * Set arrivalAirport
+     *
+     * @param Airport $arrivalAirport
+     *
+     * @return Flight
+     */
+    public function setArrivalAirport(Airport $arrivalAirport = null)
+    {
+        $this->arrivalAirport = $arrivalAirport;
+
+        return $this;
+    }
+
+    /**
+     * Get arrivalAirport
+     *
+     * @return Airport
+     */
+    public function getArrivalAirport()
+    {
+        return $this->arrivalAirport;
+    }
 
     /**
      * Set user
      *
-     * @param \WCS\CoavBundle\Entity\User $user
+     * @param User $user
      *
      * @return Flight
      */
-    public function setUser(\WCS\CoavBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
 
@@ -277,7 +331,7 @@ class Flight
     /**
      * Get user
      *
-     * @return \WCS\CoavBundle\Entity\User
+     * @return User
      */
     public function getUser()
     {
@@ -287,11 +341,11 @@ class Flight
     /**
      * Set planeModel
      *
-     * @param \WCS\CoavBundle\Entity\PlaneModel $planeModel
+     * @param PlaneModel $planeModel
      *
      * @return Flight
      */
-    public function setPlaneModel(\WCS\CoavBundle\Entity\PlaneModel $planeModel = null)
+    public function setPlaneModel(PlaneModel $planeModel = null)
     {
         $this->planeModel = $planeModel;
 
@@ -301,29 +355,22 @@ class Flight
     /**
      * Get planeModel
      *
-     * @return \WCS\CoavBundle\Entity\PlaneModel
+     * @return PlaneModel
      */
     public function getPlaneModel()
     {
         return $this->planeModel;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->reservations = new ArrayCollection();
-        $this->terrains = new ArrayCollection();
-    }
+
 
     /**
      * Add reservation
      *
-     * @param \WCS\CoavBundle\Entity\Reservation $reservation
+     * @param Reservation $reservation
      *
      * @return Flight
      */
-    public function addReservation(\WCS\CoavBundle\Entity\Reservation $reservation)
+    public function addReservation(Reservation $reservation)
     {
         $this->reservations[] = $reservation;
 
@@ -333,9 +380,9 @@ class Flight
     /**
      * Remove reservation
      *
-     * @param \WCS\CoavBundle\Entity\Reservation $reservation
+     * @param Reservation $reservation
      */
-    public function removeReservation(\WCS\CoavBundle\Entity\Reservation $reservation)
+    public function removeReservation(Reservation $reservation)
     {
         $this->reservations->removeElement($reservation);
     }
@@ -350,86 +397,4 @@ class Flight
         return $this->reservations;
     }
 
-
-    /**
-     * Add terrain
-     *
-     * @param \WCS\CoavBundle\Entity\Airport $terrain
-     *
-     * @return Flight
-     */
-    public function addTerrain(Airport $terrain)
-    {
-        $this->terrains[] = $terrain;
-
-        return $this;
-    }
-
-    /**
-     * Remove terrain
-     *
-     * @param \WCS\CoavBundle\Entity\Airport $terrain
-     */
-    public function removeTerrain(\WCS\CoavBundle\Entity\Airport $terrain)
-    {
-        $this->terrains->removeElement($terrain);
-    }
-
-    /**
-     * Get terrains
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getTerrains()
-    {
-        return $this->terrains;
-    }
-
-    /**
-     * Set departTerrain
-     *
-     * @param \WCS\CoavBundle\Entity\Airport $departTerrain
-     *
-     * @return Flight
-     */
-    public function setDepartTerrain(\WCS\CoavBundle\Entity\Airport $departTerrain = null)
-    {
-        $this->departTerrain = $departTerrain;
-
-        return $this;
-    }
-
-    /**
-     * Get departTerrain
-     *
-     * @return \WCS\CoavBundle\Entity\Airport
-     */
-    public function getDepartTerrain()
-    {
-        return $this->departTerrain;
-    }
-
-    /**
-     * Set arrivalTerrain
-     *
-     * @param \WCS\CoavBundle\Entity\Airport $arrivalTerrain
-     *
-     * @return Flight
-     */
-    public function setArrivalTerrain(\WCS\CoavBundle\Entity\Airport $arrivalTerrain = null)
-    {
-        $this->arrivalTerrain = $arrivalTerrain;
-
-        return $this;
-    }
-
-    /**
-     * Get arrivalTerrain
-     *
-     * @return \WCS\CoavBundle\Entity\Airport
-     */
-    public function getArrivalTerrain()
-    {
-        return $this->arrivalTerrain;
-    }
 }

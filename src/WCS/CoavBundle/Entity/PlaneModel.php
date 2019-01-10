@@ -2,6 +2,7 @@
 
 namespace WCS\CoavBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -71,6 +72,11 @@ class PlaneModel
      * @ORM\OneToMany(targetEntity="WCS\CoavBundle\Entity\Flight", mappedBy="planeModel")
      */
     private $flights;
+
+    public function __construct()
+    {
+        $this->flights = new ArrayCollection();
+    }
 
 
     /**
@@ -207,13 +213,6 @@ class PlaneModel
     {
         return $this->model . " " . $this->manufacturer;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->flights = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Add flight
@@ -222,7 +221,7 @@ class PlaneModel
      *
      * @return PlaneModel
      */
-    public function addFlight(\WCS\CoavBundle\Entity\Flight $flight)
+    public function addFlight(Flight $flight)
     {
         $this->flights[] = $flight;
 
@@ -234,7 +233,7 @@ class PlaneModel
      *
      * @param \WCS\CoavBundle\Entity\Flight $flight
      */
-    public function removeFlight(\WCS\CoavBundle\Entity\Flight $flight)
+    public function removeFlight(Flight $flight)
     {
         $this->flights->removeElement($flight);
     }

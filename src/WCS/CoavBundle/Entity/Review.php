@@ -34,7 +34,6 @@ class Review
      */
     private $text;
 
-
     /**
      * @ORM\ManyToOne(targetEntity="WCS\CoavBundle\Entity\User", inversedBy="reviews")
      */
@@ -138,16 +137,14 @@ class Review
         return $this->note;
     }
 
-
-
     /**
      * Set user
      *
-     * @param \WCS\CoavBundle\Entity\User $user
+     * @param User $user
      *
      * @return Review
      */
-    public function setUser(\WCS\CoavBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
 
@@ -157,7 +154,7 @@ class Review
     /**
      * Get user
      *
-     * @return \WCS\CoavBundle\Entity\User
+     * @return User
      */
     public function getUser()
     {

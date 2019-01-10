@@ -40,16 +40,21 @@ class Reservation
     private $publicationDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WCS\CoavBundle\Entity\Flight", inversedBy="reservations")
-     */
-    private $flight;
-
-    /**
      * @var bool
      *
      * @ORM\Column(name="wasDone", type="boolean")
      */
     private $wasDone;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="WCS\CoavBundle\Entity\Flight", inversedBy="reservations")
+     */
+    private $flight;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="WCS\CoavBundle\Entity\User", inversedBy="reservations")
+     */
+    private $user;
 
     /**
      * Get id
@@ -110,6 +115,30 @@ class Reservation
     }
 
     /**
+     * Set wasDone
+     *
+     * @param boolean $wasDone
+     *
+     * @return Reservation
+     */
+    public function setWasDone($wasDone)
+    {
+        $this->wasDone = $wasDone;
+
+        return $this;
+    }
+
+    /**
+     * Get wasDone
+     *
+     * @return bool
+     */
+    public function getWasDone()
+    {
+        return $this->wasDone;
+    }
+
+    /**
      * Set flight
      *
      * @param string $flight
@@ -134,33 +163,20 @@ class Reservation
     }
 
     /**
-     * Set wasDone
-     *
-     * @param boolean $wasDone
-     *
-     * @return Reservation
+     * @return string
      */
-    public function setWasDone($wasDone)
+    public function getUser()
     {
-        $this->wasDone = $wasDone;
-
-        return $this;
+        return $this->user;
     }
 
     /**
-     * Get wasDone
-     *
-     * @return bool
+     * @param User $user
      */
-    public function getWasDone()
+    public function setUser($user)
     {
-        return $this->wasDone;
+        $this->user = $user;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->flight = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+
+
 }

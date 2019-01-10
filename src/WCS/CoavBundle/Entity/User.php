@@ -3,6 +3,7 @@
 namespace WCS\CoavBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -91,12 +92,6 @@ class User implements UserInterface, \Serializable
     private $role;
 
     /**
-     * @ORM\OneToMany(targetEntity="WCS\CoavBundle\Entity\Review")
-     * @ORM\Column(name="note", type="smallint", nullable=true)
-     */
-    private $note;
-
-    /**
      * @var bool
      *
      * @ORM\Column(name="isACertifiedPilot", type="boolean")
@@ -111,7 +106,7 @@ class User implements UserInterface, \Serializable
     private $isActive;
 
     /**
-     * @ORM\ManyToMany(targetEntity="WCS\CoavBundle\Entity\Reservation")
+     * @ORM\OneToMany(targetEntity="WCS\CoavBundle\Entity\Reservation", mappedBy="user")
      */
     private $reservations;
 
@@ -121,18 +116,18 @@ class User implements UserInterface, \Serializable
     private $reviews;
 
     /**
-     * @ORM\OneToMany(targetEntity="WCS\CoavBundle\Entity\Flight", mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Flight::class, mappedBy="user")
      */
     private $flights;
-
-    // AUTO GENERATED METHODS ---------------------------------
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->reservations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->reservations = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
+        $this->flights = new ArrayCollection();
         $this->isActive = true;
     }
 
@@ -339,30 +334,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set note
-     *
-     * @param integer $note
-     *
-     * @return User
-     */
-    public function setNote($note)
-    {
-        $this->note = $note;
-
-        return $this;
-    }
-
-    /**
-     * Get note
-     *
-     * @return int
-     */
-    public function getNote()
-    {
-        return $this->note;
-    }
-
-    /**
      * Set isACertifiedPilot
      *
      * @param boolean $isACertifiedPilot
@@ -411,40 +382,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Add reservation
-     *
-     * @param \WCS\CoavBundle\Entity\Reservation $reservation
-     *
-     * @return User
-     */
-    public function addReservation(\WCS\CoavBundle\Entity\Reservation $reservation)
-    {
-        $this->reservations[] = $reservation;
-
-        return $this;
-    }
-
-    /**
-     * Remove reservation
-     *
-     * @param \WCS\CoavBundle\Entity\Reservation $reservation
-     */
-    public function removeReservation(\WCS\CoavBundle\Entity\Reservation $reservation)
-    {
-        $this->reservations->removeElement($reservation);
-    }
-
-    /**
-     * Get reservations
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getReservations()
-    {
-        return $this->reservations;
-    }
-
-    /**
      * Set password
      *
      * @param string $password
@@ -466,12 +403,6 @@ class User implements UserInterface, \Serializable
     public function getPassword()
     {
         return $this->password;
-    }
-
-    // ADDED METHODS
-    public function __toString()
-    {
-        return $this->firstName . " " . $this->lastName . " " . $this->reviews;
     }
 
     public function getSalt()
@@ -524,15 +455,48 @@ class User implements UserInterface, \Serializable
             ) = unserialize($serialized);
     }
 
+    /**
+     * Add reservation
+     *
+     * @param Reservation $reservation
+     *
+     * @return User
+     */
+    public function addReservation(Reservation $reservation)
+    {
+        $this->reservations[] = $reservation;
+
+        return $this;
+    }
+
+    /**
+     * Remove reservation
+     *
+     * @param Reservation $reservation
+     */
+    public function removeReservation(Reservation $reservation)
+    {
+        $this->reservations->removeElement($reservation);
+    }
+
+    /**
+     * Get reservations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReservations()
+    {
+        return $this->reservations;
+    }
 
     /**
      * Add review
      *
-     * @param \WCS\CoavBundle\Entity\Review $review
+     * @param Review $review
      *
      * @return User
      */
-    public function addReview(\WCS\CoavBundle\Entity\Review $review)
+    public function addReview(Review $review)
     {
         $this->reviews[] = $review;
 
@@ -542,9 +506,9 @@ class User implements UserInterface, \Serializable
     /**
      * Remove review
      *
-     * @param \WCS\CoavBundle\Entity\Review $review
+     * @param Review $review
      */
-    public function removeReview(\WCS\CoavBundle\Entity\Review $review)
+    public function removeReview(Review $review)
     {
         $this->reviews->removeElement($review);
     }
@@ -562,11 +526,11 @@ class User implements UserInterface, \Serializable
     /**
      * Add flight
      *
-     * @param \WCS\CoavBundle\Entity\Flight $flight
+     * @param Flight $flight
      *
      * @return User
      */
-    public function addFlight(\WCS\CoavBundle\Entity\Flight $flight)
+    public function addFlight(Flight $flight)
     {
         $this->flights[] = $flight;
 
@@ -576,9 +540,9 @@ class User implements UserInterface, \Serializable
     /**
      * Remove flight
      *
-     * @param \WCS\CoavBundle\Entity\Flight $flight
+     * @param Flight $flight
      */
-    public function removeFlight(\WCS\CoavBundle\Entity\Flight $flight)
+    public function removeFlight(Flight $flight)
     {
         $this->flights->removeElement($flight);
     }
@@ -591,5 +555,11 @@ class User implements UserInterface, \Serializable
     public function getFlights()
     {
         return $this->flights;
+    }
+
+    // ADDED METHODS
+    public function __toString()
+    {
+        return $this->firstName . " " . $this->lastName . " " . $this->reviews;
     }
 }
