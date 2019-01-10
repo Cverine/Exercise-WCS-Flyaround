@@ -75,3 +75,5 @@ swiftmailer:
 services:
     import.csvtoarray:
         class: WCS\CoavBundle\Service\Import\convertCsvToArrayService
+    api.connect:
+        class: WCS\CoavBundle\Service\GithubService

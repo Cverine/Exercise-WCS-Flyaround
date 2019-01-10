@@ -15,7 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use WCS\CoavBundle\Entity\Terrain;
+use WCS\CoavBundle\Entity\Airport;
 use WCS\CoavBundle\Service\Import\convertCsvToArrayService;
 
 
@@ -59,11 +59,11 @@ class ImportCommand extends ContainerAwareCommand
         $progress->start();
 
         foreach ($data as $row) {
-            $terrain = $this->em->getRepository(Terrain::class)->findOneBy([
+            $terrain = $this->em->getRepository(Airport::class)->findOneBy([
                 'icao'=> $row['icao']
         ]);
             if (!is_object($terrain)) {
-                $terrain = new Terrain();
+                $terrain = new Airport();
                 $terrain->setIcao($row['icao']);
            }
             $terrain->setName($row['name']);

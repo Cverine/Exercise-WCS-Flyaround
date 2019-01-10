@@ -2,12 +2,14 @@
 
 namespace WCS\CoavBundle\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use WCS\CoavBundle\Entity\Flight;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
 
 /**
  * Flight controller.
@@ -22,11 +24,23 @@ class FlightController extends Controller
      * @Route("/", name="flight_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $flights = $em->getRepository('WCSCoavBundle:Flight')->findAll();
+        $url = $request->getPathInfo();
+        $path = (trim($url, "/"));
+        $criteria = '';
+        if ($path == "flight") {
+            $criteria = null;
+        } else {
+            $criteria = null;
+        }
+
+        $flights = $em->getRepository('WCSCoavBundle:Flight')->findBy(['user'   => $criteria]);
+
+        $api = $this->container->get('api.connect');
+        $api->getConnexion();
 
         /**envoi email test
         $message = \Swift_Message::newInstance()
@@ -50,7 +64,7 @@ class FlightController extends Controller
     public function searchTerrainAction(Request $request)
     {
         $q = $request->query->get('term');
-        $results = $this->getDoctrine()->getRepository('WCS\CoavBundle:Terrain')->findLike($q);
+        $results = $this->getDoctrine()->getRepository('WCS\CoavBundle:Airport')->findLike($q);
 
         return $this->render(":default/search.json.twig", ['terrains' => $results]);
     }

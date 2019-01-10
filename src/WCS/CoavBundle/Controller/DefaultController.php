@@ -39,7 +39,7 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $flights = $em->getRepository("WCSCoavBundle:Flight")->findLastFlights();
         $models = $em->getRepository("WCSCoavBundle:PlaneModel")->findLastModels();
-        $terrains = $em->getRepository("WCSCoavBundle:Terrain")->findLastTerrains();
+        $terrains = $em->getRepository("Airport.php")->findLastTerrains();
         return $this->render('WCSCoavBundle:Default:index.html.twig', [
             "flights" => $flights,
             "models"  => $models,

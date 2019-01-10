@@ -1,12 +1,26 @@
 {% extends '@WCSCoav/base.html.twig' %}
+
+
 {% block body %}
+    {% set alias = "alias1" %}
+    {{ dump(_context) }}
+{% macro test(_context, alias) %}
+{{ dump(alias) }}
+{% endmacro %}
+    {% import _self test %}
+    <div class="flight-results">
+    <h1>{{ test(alias) }}</h1>
+        <h2>Tous les prochains vols</h2>
+        <ul>
+            {% for flight in flights %}
+            <li>{{ flight.id }}</li>
+            {% endfor %}
+        </ul>
+
+    </div>
     <div class="search">
         <h2>Recherchez un vol</h2>
         <input type="text">
-    </div>
-    <div class="flight-results">
-        <h2>Tous les prochains vols</h2>
-        <table></table>
     </div>
 
 

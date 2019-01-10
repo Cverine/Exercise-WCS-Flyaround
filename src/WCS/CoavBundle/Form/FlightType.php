@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -23,13 +24,13 @@ class FlightType extends AbstractType
             'choice_label' => 'name',
         ))
                 ->add('arrivalTerrain', EntityType::class, array(
-                'class' => 'WCS\CoavBundle\Entity\Terrain',
+                'class' => 'Airport.php',
                 'choice_label' => 'name',
             ))
-                ->add('takeOffTime', DateTimeType::class, array(
-                    'widget' => 'choice',
-                    'years' => range(2017, 2020)
-                ))
+//                ->add('takeOffTime', DateTimeType::class, array(
+//                    'widget' => 'choice',
+//                    'years' => range(2017, 2020)
+//                ))
                 ->add('landingTime', DateTimeType::class, array(
                     'widget' => 'choice',
                     'years' => range(2017, 2020)
@@ -41,7 +42,8 @@ class FlightType extends AbstractType
                     'class' => 'WCS\CoavBundle\Entity\PlaneModel',
                     'choice_label' => 'model',
                 ))
-                ->add('wasDone');
+                ->add('wasDone')
+                ->add('takeOffTime', FormType::class, ['widget'=> 'single_text']);
     }
     
     /**

@@ -10,6 +10,8 @@ namespace WCS\CoavBundle\Repository;
  */
 class TerrainRepository extends \Doctrine\ORM\EntityRepository
 {
+    const FIELDS = 'id';
+
     public function findLastTerrains()
     {
         $qb = $this
@@ -18,5 +20,10 @@ class TerrainRepository extends \Doctrine\ORM\EntityRepository
             ->setMaxResults(3)
             ->getQuery();
         return $qb->getResult();
+    }
+    public function findByPertinence($search, $fields)
+    {
+        $results = [];
+
     }
 }

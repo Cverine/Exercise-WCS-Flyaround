@@ -4,13 +4,15 @@ namespace WCS\CoavBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
-use WCS\CoavBundle\Entity\Terrain;
+use WCS\CoavBundle\Entity\Airport;
+use WCS\CoavBundle\Entity\Search;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use WCS\CoavBundle\Repository\TerrainRepository;
 
 /**
- * Terrain controller.
+ * Airport controller.
  *
  * @Route("terrain")
  */
@@ -26,7 +28,7 @@ class TerrainController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $terrains = $em->getRepository('WCSCoavBundle:Terrain')->findAll();
+        $terrains = $em->getRepository('Airport.php')->findAll();
 
         return $this->render('terrain/index.html.twig', array(
             'terrains' => $terrains,
@@ -39,7 +41,7 @@ class TerrainController extends Controller
      * @Route("/{id}", name="terrain_show")
      * @Method("GET")
      */
-    public function showAction(Terrain $terrain)
+    public function showAction(Airport $terrain)
     {
 
         return $this->render('terrain/show.html.twig', array(
@@ -56,7 +58,7 @@ class TerrainController extends Controller
      */
     public function newAction(Request $request)
     {
-        $terrain = new Terrain();
+        $terrain = new Airport();
         $form = $this->createForm('WCS\CoavBundle\Form\TerrainType', $terrain);
         $form->handleRequest($request);
 
@@ -82,7 +84,7 @@ class TerrainController extends Controller
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_PILOT')")
      */
-    public function editAction(Request $request, Terrain $terrain)
+    public function editAction(Request $request, Airport $terrain)
     {
         $deleteForm = $this->createDeleteForm($terrain);
         $editForm = $this->createForm('WCS\CoavBundle\Form\TerrainType', $terrain);
@@ -109,7 +111,7 @@ class TerrainController extends Controller
      * @Method("DELETE")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function deleteAction(Request $request, Terrain $terrain)
+    public function deleteAction(Request $request, Airport $terrain)
     {
         $form = $this->createDeleteForm($terrain);
         $form->handleRequest($request);
@@ -126,16 +128,33 @@ class TerrainController extends Controller
     /**
      * Creates a form to delete a terrain entity.
      *
-     * @param Terrain $terrain The terrain entity
+     * @param Airport $terrain The terrain entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(Terrain $terrain)
+    private function createDeleteForm(Airport $terrain)
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('terrain_delete', array('id' => $terrain->getId())))
             ->setMethod('DELETE')
             ->getForm()
             ;
+    }
+
+    public function searchAction(Request $request, TerrainRepository $terrainRepository)
+    {
+        $search = new Search;
+        $form = $this->createForm('WCS\CoavBundle\Form\SearchType', $search);
+        $form->handleRequest($request);
+
+        $em = $this->getDoctrine()->getManager();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $results = $terrainRepository->findByPertinence($search, TerrainRepository::FIELDS);
+        }
+
+        return $this->render('@WCSCoav/partials/search.html.twig', [
+            'form' => $form->createView(),
+            'result' => $results,
+        ]);
     }
 }

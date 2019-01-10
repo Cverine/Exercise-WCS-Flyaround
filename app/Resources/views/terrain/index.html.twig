@@ -2,7 +2,7 @@
 
 {% block body %}
     <h1>Terrains list</h1>
-
+    {% include 'WCSCoavBundle:partials:search.html.twig' %}
     <table>
         <thead>
             <tr>
@@ -13,7 +13,6 @@
                 <th>Longitude</th>
                 <th>Address</th>
                 <th>City</th>
-                <th>Zipcode</th>
                 <th>Country</th>
                 <th>Actions</th>
             </tr>
@@ -28,7 +27,6 @@
                 <td>{{ terrain.longitude }}</td>
                 <td>{{ terrain.address }}</td>
                 <td>{{ terrain.city }}</td>
-                <td>{{ terrain.zipcode }}</td>
                 <td>{{ terrain.country }}</td>
                 <td>
                     <ul>
