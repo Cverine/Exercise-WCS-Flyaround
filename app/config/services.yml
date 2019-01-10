@@ -28,3 +28,7 @@ services:
         resource: '../../src/WCS/CoavBundle/Controller'
         public: true
         tags: ['controller.service_arguments']
+
+    App\Form\Extension\DateFieldFormatExtension:
+            tags:
+                - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }

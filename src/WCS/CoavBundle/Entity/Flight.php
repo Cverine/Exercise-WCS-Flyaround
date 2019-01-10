@@ -78,14 +78,14 @@ class Flight
     private $wasDone;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WCS\CoavBundle\Entity\Terrain")
+     * @ORM\ManyToOne(targetEntity=Airport::class, inversedBy="departFlights")
      */
-    private $departTerrain;
+    private $departAirport;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WCS\CoavBundle\Entity\Terrain")
+     * @ORM\ManyToOne(targetEntity=Airport::class, inversedBy="arrivalFlights")
      */
-    private $arrivalTerrain;
+    private $arrivalAirport;
 
 
     /**
@@ -354,11 +354,11 @@ class Flight
     /**
      * Add terrain
      *
-     * @param \WCS\CoavBundle\Entity\Terrain $terrain
+     * @param \WCS\CoavBundle\Entity\Airport $terrain
      *
      * @return Flight
      */
-    public function addTerrain(Terrain $terrain)
+    public function addTerrain(Airport $terrain)
     {
         $this->terrains[] = $terrain;
 
@@ -368,9 +368,9 @@ class Flight
     /**
      * Remove terrain
      *
-     * @param \WCS\CoavBundle\Entity\Terrain $terrain
+     * @param \WCS\CoavBundle\Entity\Airport $terrain
      */
-    public function removeTerrain(\WCS\CoavBundle\Entity\Terrain $terrain)
+    public function removeTerrain(\WCS\CoavBundle\Entity\Airport $terrain)
     {
         $this->terrains->removeElement($terrain);
     }
@@ -388,11 +388,11 @@ class Flight
     /**
      * Set departTerrain
      *
-     * @param \WCS\CoavBundle\Entity\Terrain $departTerrain
+     * @param \WCS\CoavBundle\Entity\Airport $departTerrain
      *
      * @return Flight
      */
-    public function setDepartTerrain(\WCS\CoavBundle\Entity\Terrain $departTerrain = null)
+    public function setDepartTerrain(\WCS\CoavBundle\Entity\Airport $departTerrain = null)
     {
         $this->departTerrain = $departTerrain;
 
@@ -402,7 +402,7 @@ class Flight
     /**
      * Get departTerrain
      *
-     * @return \WCS\CoavBundle\Entity\Terrain
+     * @return \WCS\CoavBundle\Entity\Airport
      */
     public function getDepartTerrain()
     {
@@ -412,11 +412,11 @@ class Flight
     /**
      * Set arrivalTerrain
      *
-     * @param \WCS\CoavBundle\Entity\Terrain $arrivalTerrain
+     * @param \WCS\CoavBundle\Entity\Airport $arrivalTerrain
      *
      * @return Flight
      */
-    public function setArrivalTerrain(\WCS\CoavBundle\Entity\Terrain $arrivalTerrain = null)
+    public function setArrivalTerrain(\WCS\CoavBundle\Entity\Airport $arrivalTerrain = null)
     {
         $this->arrivalTerrain = $arrivalTerrain;
 
@@ -426,7 +426,7 @@ class Flight
     /**
      * Get arrivalTerrain
      *
-     * @return \WCS\CoavBundle\Entity\Terrain
+     * @return \WCS\CoavBundle\Entity\Airport
      */
     public function getArrivalTerrain()
     {

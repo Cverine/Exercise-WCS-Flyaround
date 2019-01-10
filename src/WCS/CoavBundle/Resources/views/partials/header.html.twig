@@ -9,37 +9,37 @@
         </ul>
 
         <!-- LE CONTENU DE LA POPUP -->
-        <div class="modal blur-effect" id="popup">
-            <div class="popup-content">
-                <h3>Log In</h3>
-                <form action="{{ path('login_check') }}" method="post">
-                    <label for="username">User Name</label>
-                    <input type="text" id="username" name="_username" class="form-control"/>
+        {#<div class="modal blur-effect" id="popup">#}
+            {#<div class="popup-content">#}
+                {#<h3>Log In</h3>#}
+                {#<form action="{{ path('login_check') }}" method="post">#}
+                    {#<label for="username">User Name</label>#}
+                    {#<input type="text" id="username" name="_username" class="form-control"/>#}
 
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="_password" class="form-control"/>
+                    {#<label for="password">Password</label>#}
+                    {#<input type="password" id="password" name="_password" class="form-control"/>#}
 
-                    <input type="submit" class="submit" value="Log In"/>
+                    {#<input type="submit" class="submit" value="Log In"/>#}
 
-                    <div class="close"></div>
-                </form>
-            </div>
-        </div>
+                    {#<div class="close"></div>#}
+                {#</form>#}
+            {#</div>#}
+        {#</div>#}
 
         <!-- FIN DE LA POPUP -->
-        <div class="login">
-            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-            <button class="popup-button"><a href="{{ path('logout') }}">Logout</a></button>
+        {#<div class="login">#}
+            {#{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}#}
+            {#<button class="popup-button"><a href="{{ path('logout') }}">Logout</a></button>#}
 
-        {% else %}
-            <button class="popup-button" data-modal="popup"><a>Log In</a></button>
-        {% endif %}
-        </div>
+        {#{% else %}#}
+            {#<button class="popup-button" data-modal="popup"><a>Log In</a></button>#}
+        {#{% endif %}#}
+        {#</div>#}
     </div>
     <div id="flyaround">
         <h1><a href="{{ path('homepage') }}">FlyAround</a></h1>
         <p>Share your flight</p>
     </div>
-    <div class="overlay"></div><!-- La div overlay Modale -->
+    {#<div class="overlay"></div><!-- La div overlay Modale -->#}
 
 </div>

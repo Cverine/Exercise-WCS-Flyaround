@@ -22,7 +22,7 @@ class TerrainType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'WCS\CoavBundle\Entity\Terrain'
+            'data_class' => 'WCS\CoavBundle\Entity\Airport'
         ));
     }
 
